@@ -123,20 +123,25 @@ func (p *Person) SetName(name string) { p.name = name }
 // Use the following special variable names for specific purposes:
 var _ = `
 err     : Error values
+ok      : Boolean flag indicating success, presence, or validity
 i, j, k : Loop indexes (especially in nested loops)
 n       : Count or length
 k       : Map key
-v       : Map value
+v       : Map value / generic value
 ch      : Channel
 res     : Result of a function or operation
 buf     : Buffer (e.g., for bytes.Buffer or temporary data)
 tmp     : Temporary value or variable
 ctx     : Context (context.Context)
-tmp     : Temporary value
-r, w    : Reader, Writer (w: Response, r: Request)
+r, w    : Reader, Writer (or r: http.Request, w: http.ResponseWriter)
 m       : Generic map
 x, y, z : Math / Coordinates
 fn      : Function variable
+mu      : Mutex (sync.Mutex or sync.RWMutex)
+wg      : WaitGroup (sync.WaitGroup)
+t, b    : Testing and Benchmark pointers (*testing.T, *testing.B)
+args    : Slice of arguments (e.g., os.Args or custom inputs)
+msg     : Message payload or packet data
 _       : Blank identifier (to ignore a value)
 `
 
