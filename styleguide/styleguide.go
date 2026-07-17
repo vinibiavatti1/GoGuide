@@ -122,22 +122,22 @@ func (p *Person) SetName(name string) { p.name = name }
 // Special Names
 // Use the following special variable names for specific purposes:
 var _ = `
-err     // Error values
-i, j, k // Loop indexes (especially in nested loops)
-n       // Count or length
-k       // Map key
-v       // Map value
-ch      // Channel
-res     // Result of a function or operation
-buf     // Buffer (e.g., for bytes.Buffer or temporary data)
-tmp     // Temporary value or variable
-ctx     // Context (context.Context)
-tmp     // Temporary value
-r, w    // Reader, Writer (w: Response, r: Request)
-m       // Generic map
-x, y, z // Math / Coordinates
-fn      // Function variable
-_       // Blank identifier (to ignore a value)
+err     : Error values
+i, j, k : Loop indexes (especially in nested loops)
+n       : Count or length
+k       : Map key
+v       : Map value
+ch      : Channel
+res     : Result of a function or operation
+buf     : Buffer (e.g., for bytes.Buffer or temporary data)
+tmp     : Temporary value or variable
+ctx     : Context (context.Context)
+tmp     : Temporary value
+r, w    : Reader, Writer (w: Response, r: Request)
+m       : Generic map
+x, y, z : Math / Coordinates
+fn      : Function variable
+_       : Blank identifier (to ignore a value)
 `
 
 // Documentation

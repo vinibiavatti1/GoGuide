@@ -5,7 +5,7 @@
 // or FS with the contents of files read from the package directory or subdirectories at compile time.
 // Embed directives accept paths relative to the directory containing the Go source file.
 // Syntax:
-//   //go:embed <path>
+// - //go:embed <path>
 
 package directives
 

@@ -3,8 +3,8 @@
 // They allow you to modify the value of a variable without passing it by value.
 // Pointers are declared using the `*` operator, and you can obtain a pointer to a variable using the `&` operator.
 // Syntax:
-//   *x - dereference operator, used to access the value at the address stored in x
-//   &x - address operator, used to get the memory address of x
+// - *x - dereference operator, used to access the value at the address stored in x
+// - &x - address operator, used to get the memory address of x
 
 package datatypes
 

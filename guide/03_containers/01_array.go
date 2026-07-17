@@ -2,7 +2,7 @@
 // Arrays are a collection of elements of the same type.
 // They are fixed in size and have a zero-based index.
 // Syntax:
-//   [<length>]<datatype>{<values>}
+// - [<length>]<datatype>{<values>}
 
 package containers
 

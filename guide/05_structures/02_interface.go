@@ -43,30 +43,30 @@ func (d *Data) Print() {
 // Using Interface Implementation
 // Now we can use the interface to call the method on any type that implements it.
 func CheckInterfaceImplementation() {
-
 	// Creating an Instance
 	// We will create an instance of the Data struct.
 	data := &Data{Key: "A", Value: "1"}
 
 	// Calling the Interface Method
 	// Since Data implements the Printer interface, we can call the Print method on it.
-	data.Print() // Output: A: 1
+	// Output: A: 1
+	data.Print()
 
 	// Ensuring Interface Implementation
 	// To ensure that the Data struct implements the Printer interface, we can use a type assertion.
 	// This will cause a compile-time error if Data does not implement Printer.
 	// This is a common pattern in Go to ensure that a type implements an interface.
-	var _ Printer = (*Data)(nil) // This will not cause an error if Data implements Printer.
+	var _ Printer = (*Data)(nil)
 }
 
 // Local Interfaces
 // We can define local interfaces inside functions.
 func LocalInterfaces() {
-
 	// Creating an Instance
 	// We will create an instance of the Data struct.
+	// Output: Data: &{A 1}
 	data := &Data{Key: "A", Value: "1"}
-	fmt.Println("Data:", data) // Output: Data: &{A 1}
+	fmt.Println("Data:", data)
 
 	// Defining an Interface
 	// We can define an interface inside a function.
@@ -78,5 +78,5 @@ func LocalInterfaces() {
 	// Ensuring Interface Implementation
 	// Knowing that the "otherPrinter" interface has the same signature as the "Printer" interface, we can
 	// check if the Data struct implements it.
-	var _ otherPrinter = (*Data)(nil) // This will not cause an error if Data implements otherPrinter.
+	var _ otherPrinter = (*Data)(nil)
 }

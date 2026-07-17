@@ -43,19 +43,21 @@ func (c Color) String() string {
 // Using Enum
 // This function demonstrates how to use the enum type and its methods.
 func UsingEnum() {
-
 	// Get Enum Value
 	// We can get the enum value by accessing the enum constant directly.
+	// Output: x: 0
 	x := Red
-	fmt.Println("x:", x) // Output: x: 0
+	fmt.Println("x:", x)
 
 	// Get Enum String Value
 	// We can get the string representation of the enum value by calling the String method.
-	fmt.Println("x:", x.String()) // Output: x: Red
+	// Output: x: Red
+	fmt.Println("x:", x.String())
 
 	// Iterate Over Enum Values
 	// We can iterate over the enum values using a for loop.
+	// Output: 0 Red | 1 Green | 2 Blue
 	for _, c := range Colors {
-		fmt.Println(c, c.String()) // Output: 0 Red, 1 Green, 2 Blue
+		fmt.Println(c, c.String())
 	}
 }

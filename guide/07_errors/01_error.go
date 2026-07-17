@@ -13,7 +13,6 @@ import (
 
 // Declaring Function that Raises an Error
 // The function below shows how to declare a function that returns an error.
-// We can use the "errors.New" function to create a new error.
 // If we need a formatted error, we can use the "fmt.Errorf" function.
 // The error can be nil if there is no error.
 // It returns an error value that can be used to format the error message.
@@ -24,17 +23,14 @@ func Divide(x, y int) (int, error) {
 	return x / y, nil
 }
 
-// Handling Error
-// We will call the function above to raise an error.
+// Handling Errors
+// We can check if the error value is nil or not.
+// If the error value is not nil, we can handle the error.
+// Output: Error: division by zero 4/0
 func HandlingError() {
-
-	// Handling Errors
-	// We can check if the error value is nil or not.
-	// If the error value is not nil, we can handle the error.
-	// This is the same approach to validate errors created using "errors.New"
 	r, err := Divide(4, 0)
 	if err != nil {
-		fmt.Println("Error:", err) // Output: Error: division by zero 4/0
+		fmt.Println("Error:", err)
 	} else {
 		fmt.Println("Result:", r)
 	}
@@ -46,9 +42,9 @@ func HandlingError() {
 // We can wrap an error using the "fmt.Errorf" function with the "%w" (wrap) verb.
 // The function below performs the other function, and wraps the error if it occurs.
 func DoDivide(x, y int) (int, error) {
-	r, err := Divide(x, y) // Call the function that raises an error
+	r, err := Divide(x, y)
 	if err != nil {
-		return 0, fmt.Errorf("failed to divide: %w", err) // Wraps the error
+		return 0, fmt.Errorf("failed to divide: %w", err)
 	}
 	return r, nil
 }
@@ -56,13 +52,11 @@ func DoDivide(x, y int) (int, error) {
 // Handling Wrapped Error
 // Now, when the errors is printed, it will show the wrapped error and the original error.
 // This way is more recommended since it is easier to locate the error.
+// Output: Error: failed to divide: division by zero 4/0
 func HandlingWrappedError() {
-
-	// Handling Wrapped Error
-	// We will raise the error to look at the message.
 	_, err := DoDivide(4, 0)
 	if err != nil {
-		fmt.Println("Error:", err) // Output: Error: failed to divide: division by zero 4/0
+		fmt.Println("Error:", err)
 	} else {
 		fmt.Println("Successful")
 	}
@@ -97,14 +91,12 @@ func Request(path string) (string, error) {
 // Handling a Custom Error
 // The function below shows how to handle the custom error.
 // We can check the type of the error using type assertion to ensure that the error is of type "CustomError".
+// Output: Error: Code: 403, Message: Forbidden
 func HandlingCustomError() {
-
-	// Handling Custom Error
-	// We will call the function above to raise the custom error.
 	_, err := Request("/admin")
 	if err != nil {
 		if _, ok := err.(*CustomError); ok {
-			fmt.Println("Error:", err) // Output: Error: Code: 403, Message: Forbidden
+			fmt.Println("Error:", err)
 		} else {
 			fmt.Println("Generic Error")
 		}
@@ -134,15 +126,14 @@ func FetchData(id int) (string, error) {
 // Handling Errors with errors.Is
 // We should use "errors.Is" instead of the "==" operator to check for sentinel errors.
 // "errors.Is" is smarter because it can inspect wrapped errors (created with %w).
+// The code below wraps the sentinel error to simulate a real-world multi-layer architecture.
+// Even though the error is wrapped, errors.Is can find ErrNotFound inside it.
+// Output: Error: Caught a NotFound error!
 func HandlingWithErrorsIs() {
 	_, err := FetchData(-1)
-
-	// Wrapping the sentinel error to simulate a real-world multi-layer architecture
 	wrappedErr := fmt.Errorf("database query failed: %w", err)
-
-	// Even though the error is wrapped, errors.Is can find ErrNotFound inside it
 	if errors.Is(wrappedErr, ErrNotFound) {
-		fmt.Println("Error: Caught a NotFound error!") // Output: Error: Caught a NotFound error!
+		fmt.Println("Error: Caught a NotFound error!")
 	}
 }
 
@@ -150,18 +141,12 @@ func HandlingWithErrorsIs() {
 // In your previous example, you used type assertion (err.(*CustomError)).
 // However, if a CustomError is wrapped using "%w", type assertion will FAIL.
 // "errors.As" is the recommended way because it unwraps the error chain to find the target type.
+// Output: Error: Found CustomError with Code 403
 func HandlingWithErrorsAs() {
-	_, err := Request("/admin") // Returns &CustomError
-
-	// Wrapping the custom error
+	_, err := Request("/admin")
 	wrappedErr := fmt.Errorf("api gateway error: %w", err)
-
-	// We declare a pointer variable of our custom error type
 	var myCustomErr *CustomError
-
-	// errors.As checks the chain, extracts the error, and assigns it to our variable
 	if errors.As(wrappedErr, &myCustomErr) {
 		fmt.Printf("Error: Found CustomError with Code %d\n", myCustomErr.Code)
-		// Output: Error: Found CustomError with Code 403
 	}
 }

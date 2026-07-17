@@ -67,7 +67,6 @@ func (p *Person) SetSurname(surname string) { // Setter
 // Using Structs
 // This function demonstrates how to create an instance of a struct, access its fields, mutate data, and call methods.
 func UsingStructs() {
-
 	// Creating an Instance
 	// Creating an instance of "Employee", initializing the "Person" field using a pointer.
 	employee1 := &Employee{
@@ -91,22 +90,25 @@ func UsingStructs() {
 
 	// Calling Methods
 	// Calling the "FullName" method associated to the employee.
+	// Output: fullname: JohnDuo
 	fullname := employee2.FullName()
-	fmt.Println("fullname:", fullname) // Output: fullname: JohnDuo
+	fmt.Println("fullname:", fullname)
 
 	// Acessing Private Data
 	// Since the "Surname" field is private, it can be accessed only by public methods.
 	// Note that the "Surname" method belongs to the "Person" struct, but it can be accessed directly from the "Employee" struct.
+	// Output: Duo Duo
 	surname1 := employee1.Person.Surname() // Accessing emdebbed
 	surname2 := employee1.Surname()        // Accessing directly
-	fmt.Println(surname1, surname2)        // Output: Duo Duo
+	fmt.Println(surname1, surname2)
 
 	// Mutating Data
 	// We can assign a new value to a public field of the struct.
 	// We can also set the value of embedded fields directly.
-	employee1.Salary = 2500.0                // Setting Salary
-	employee1.Name = "John Doe"              // Setting Name directly
-	fmt.Println("Salary:", employee1.Salary) // Output: Salary: 2500.0
+	// Output: Salary: 2500.0
+	employee1.Salary = 2500.0   // Setting Salary
+	employee1.Name = "John Doe" // Setting Name directly
+	fmt.Println("Salary:", employee1.Salary)
 
 	// Local Structs
 	// We can declare a struct inside a function.
@@ -117,21 +119,23 @@ func UsingStructs() {
 
 	// Creating an Instance of Local Struct
 	// The local struct is only available inside the function
+	// Output: otherPerson: {John Duo}
 	_user := &user{
 		Name: "John Duo",
 	}
-	fmt.Println("otherPerson:", _user) // Output: otherPerson: {John Duo}
+	fmt.Println("otherPerson:", _user)
 
 	// Anonymous Structs
 	// We can create anonymous structs, which are structs without a name.
 	// They are useful for quick and temporary data structures.
 	// Note that the struct below is not named, but it has fields.
+	// Output: person: {John Duo}
 	person := struct {
 		Name string
 	}{
 		Name: "John Duo",
 	}
-	fmt.Println("person:", person) // Output: person: {John Duo}2
+	fmt.Println("person:", person)
 }
 
 // Struct Tags
@@ -145,7 +149,6 @@ type Customer struct {
 // Using Struct Tags
 // This function demonstrates how to use struct tags to provide metadata to fields.
 func UsingStructTags() {
-
 	// Creating an Instance
 	customer := Customer{
 		Id: 1,
@@ -154,12 +157,14 @@ func UsingStructTags() {
 	// Parsing Struct Tags (JSON)
 	// Tags are using by libraries as meta information for some operations.
 	// For example, in json library, the tag "json" is used to define the key name in the JSON output.
+	// Output: {"key":1}
 	jsonData, _ := json.Marshal(customer)
-	fmt.Println(string(jsonData)) // Output: {"key":1}
+	fmt.Println(string(jsonData))
 
 	// Accessing Struct Tags
 	// Struct tags can be accessed using reflection.
 	// The "reflect" package is used to inspect the struct fields and their tags.
+	// Output: key
 	val := reflect.TypeOf(customer).Field(0).Tag.Get("json")
-	fmt.Println(val) // Output: key
+	fmt.Println(val)
 }

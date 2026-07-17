@@ -20,19 +20,20 @@ func Configuration() {
 // Unhandled Panic
 // The function below raises a panic and does not handle it.
 // This will cause the program to terminate immediately.
+// Output: panic: Configuration error!
 func UnhandledPanic() {
 	Configuration()
-	// Output: panic: Configuration error!
 }
 
 // Handled Panic
 // The unique way to handle a panic is to use the "defer" statement in the function that raises the panic.
 // The "recover" function is used to regain control of a panicking goroutine.
+// Output: Recovered from panic: Configuration error!
 func HandledPanic() {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("Recovered from panic:", r) // Recovered from panic: Configuration error!
+			fmt.Println("Recovered from panic:", r)
 		}
 	}()
-	Configuration() // Raises a panic
+	Configuration()
 }

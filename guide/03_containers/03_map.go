@@ -4,7 +4,7 @@
 // The key type must be a comparable type, while the value type can be any type.
 // Maps are unordered collections, meaning the order of elements is not guaranteed.
 // Syntax:
-//   map[<keyType>]<valueType>{<key>:<value>}
+// - map[<keyType>]<valueType>{<key>:<value>}
 
 package containers
 

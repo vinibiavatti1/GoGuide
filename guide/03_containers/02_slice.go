@@ -2,7 +2,7 @@
 // Slices are used to store a sequence of elements of the same type.
 // Unlike arrays, slices can be resized dynamically.
 // Syntax:
-//   []<datatype>{<values>}
+// - []<datatype>{<values>}
 
 package containers
 

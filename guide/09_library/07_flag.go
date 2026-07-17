@@ -38,7 +38,6 @@ func init() {
 // To access the values of the flags, we can use the variables defined above.
 // The variables are pointer variables, so we need to dereference them to get the actual values.
 func ProcessFlags() {
-
 	// Acessing Flags
 	// We will print all the flags to the console.
 	fmt.Println("p1:", *p1Flag)

@@ -5,7 +5,7 @@
 // The command can be any executable that can be run from the command line, such as a shell script or a Go program.
 // To run the generation, execute: "go generate".  This will scan the file for all //go:generate directives and execute them.
 // Syntax:
-//   //go:generate <command>
+// - //go:generate <command>
 
 package directives
 
