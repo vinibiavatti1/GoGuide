@@ -25,6 +25,13 @@ func DeclaringStrings() {
 	`
 	fmt.Println("x:", x)
 
+	// Declaring a Raw String Literal
+	// We can also use backticks (`) to prevent escape characters (like \n or \t) from being interpreted.
+	// This is highly used for Regular Expressions and file paths.
+	// Output: x: \d+\s+\w+\t\n
+	x = `\d+\s+\w+\t\n`
+	fmt.Println("x:", x)
+
 	// Declaring a String using Hexadecimal Notation
 	// We can use the "\x<n>" syntax to define hexadecimal characters
 	// Output: x: A
