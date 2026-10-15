@@ -18,7 +18,7 @@
 // - The pkg directory is used for public libraries that can be imported by other projects.
 // - Code in this directory is intended to be reusable and can be shared across different projects.
 
-package project
+package introduction
 
 // Example of a simple project structure
 var _ = `

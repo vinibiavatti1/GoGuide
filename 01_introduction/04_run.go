@@ -2,7 +2,7 @@
 // - To run the project, you can use the "go run" command.
 // - This command compiles and runs the Go program in the current directory.
 
-package project
+package introduction
 
 // Running the Project
 // - To run the project, you can use the "go run" command.

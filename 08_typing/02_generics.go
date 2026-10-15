@@ -9,7 +9,7 @@
 // - <name>[<type>](<params> T) T {...}
 // - <name>[<type>] {...}
 
-package syntax
+package typing
 
 import (
 	"cmp"

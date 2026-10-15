@@ -4,7 +4,7 @@
 // - New Type: type <name> <type>
 // - Alias:    type <name> = <type>
 
-package syntax
+package typing
 
 import "fmt"
 

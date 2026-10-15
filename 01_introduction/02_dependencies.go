@@ -6,7 +6,7 @@
 // - It also allows you to work with multiple versions of a dependency and to share your code with
 //   others easily.
 
-package project
+package introduction
 
 // Adding Dependencies
 // - Dependencies are registered in the go.mod file.

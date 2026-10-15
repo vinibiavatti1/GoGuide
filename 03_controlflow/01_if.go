@@ -7,7 +7,7 @@
 // - if <condition> {...} else if {...}
 // - if <declarations>; <condition> {...}
 
-package syntax
+package controlflow
 
 import "fmt"
 

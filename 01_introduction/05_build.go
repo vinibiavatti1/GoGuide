@@ -4,7 +4,7 @@
 // - Build will generate a binary executable file for the target operating system and architecture.
 // - Syntax: go build [options] [packages]
 
-package project
+package introduction
 
 // How to Build a Go Program
 // - To build a Go program, we use the "go build" command.

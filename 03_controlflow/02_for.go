@@ -7,7 +7,7 @@
 // - for <variables> := range <data> {...}
 // - for <variables>; <condition>; <increment> {...}
 
-package syntax
+package controlflow
 
 import "fmt"
 

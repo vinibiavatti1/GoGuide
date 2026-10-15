@@ -4,7 +4,7 @@
 // The Must pattern is typically implemented as a function that takes a value and an error,
 // and either returns the value or panics if there's an error.
 
-package patterns
+package gopatterns
 
 import "fmt"
 

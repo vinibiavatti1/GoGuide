@@ -3,7 +3,7 @@
 // - A module is defined by a go.mod file that defines the module's path and its dependencies.
 // - An application can have multiple modules.
 
-package project
+package introduction
 
 // Creating a Go module
 // - To create a Go module, you need to create a directory for your module and run the go mod init

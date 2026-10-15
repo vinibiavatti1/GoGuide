@@ -6,7 +6,7 @@
 // - switch <variable> {...}
 // - switch <declarations>; <variable> {{...}
 
-package syntax
+package controlflow
 
 import "fmt"
 

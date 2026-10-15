@@ -6,7 +6,7 @@
 // - goto <label>
 // - <label>:
 
-package syntax
+package controlflow
 
 import "fmt"
 

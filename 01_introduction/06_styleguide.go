@@ -7,7 +7,7 @@
 //   name your variables and functions, and how to organize your packages.
 // - Reference: https://google.github.io/styleguide/go
 
-package project
+package introduction
 
 import (
 	"errors"
