@@ -5,7 +5,7 @@
 // and functions, and how to organize your packages.
 // Go Style Guide: https://google.github.io/styleguide/go
 
-package styleguide
+package project
 
 import (
 	"errors"

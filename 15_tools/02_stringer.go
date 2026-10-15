@@ -5,7 +5,7 @@
 // The file is created in the same package and directory as the package that defines T.
 // It has helpful defaults designed for use with go generate.
 
-package stringer
+package tools
 
 // Setup
 // The stringer tool is part of the Go tools package and can be installed using the command below.

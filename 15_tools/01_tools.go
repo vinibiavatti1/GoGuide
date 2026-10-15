@@ -6,7 +6,7 @@
 // A common example is the "stringer" tool, which automatically generates the String() method for custom types
 // based on their constants. This is especially useful when working with enums or logging.
 
-package main
+package tools
 
 // Installing Tools
 // To install a tool, use the "go install" command followed by the package path.
