@@ -6,12 +6,15 @@
 package datatypes
 
 // Boolean
+
 var _ bool = true // true or false
 
 // String
+
 var _ string = "Hello" // UTF-8 string
 
 // Integer
+
 var _ int = 1     // 32/64-bit integer (default)
 var _ int8 = 1    // 8-bit: -128 to 127
 var _ int16 = 1   // 16-bit: -32768 to 32767
@@ -27,12 +30,15 @@ var _ byte = 1    // Alias for uint8
 var _ rune = 'A'  // Alias for int32 (Unicode code point)
 
 // Float
+
 var _ float32 = 3.14 // 32-bit float
 var _ float64 = 3.14 // 64-bit float (default)
 
 // Complex
+
 var _ complex64 = 1 + 2i  // 32-bit real and imaginary parts
 var _ complex128 = 1 + 2i // 64-bit real and imaginary parts (default)
 
 // Any
+
 var _ any = 1 // Any stores values of any type

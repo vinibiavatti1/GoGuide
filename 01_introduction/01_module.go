@@ -11,6 +11,7 @@ package introduction
 // - Usually, the module file is located in the root of the module/project directory.
 // - The module name will be the base for all packages imports.
 // - Note: Usually, the module name follows the format: github.com/<username>/<repository-name>.
+
 var _ = `
 go mod init <module-name>
 `
@@ -24,6 +25,7 @@ go mod init <module-name>
 //   - replace: Replaces a module with another module.
 //   - exclude: Excludes a module from the module's dependencies.
 // - A simplified structure of the go.mod file is as follows:
+
 var _ = `
 module <module-name>
 
@@ -47,6 +49,7 @@ exclude (
 // - A workspace is a collection of modules, and it is defined by a go.work file.
 // - The difference between a module and a workspace is that a module is a single unit of code,
 //   while a workspace is a collection of modules.
+
 var _ = `
 go work init <module-name> <module-name> ...
 `
@@ -54,6 +57,7 @@ go work init <module-name> <module-name> ...
 // The go.work File
 // - The go.work file has the statements below which is used to configure the workspace.
 // - It is similar to the go.mod file, but it is used to define a workspace instead of a module.
+
 var _ = `
 go: <version>
 

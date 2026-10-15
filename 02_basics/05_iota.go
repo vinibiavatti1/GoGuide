@@ -11,6 +11,7 @@ package basics
 
 // Defining Successive Values
 // - Iota starts at zero (0) and increments automatically.
+
 const (
 	A1 = iota // 0
 	B1        // 1
@@ -19,6 +20,7 @@ const (
 
 // Skipping Values
 // - The "_" identifier can be used to skip iota values.
+
 const (
 	_  = iota // 0 (skipped)
 	B2        // 1
@@ -27,6 +29,7 @@ const (
 
 // Iota with Expressions
 // - We can apply expressions to modify the generated sequence.
+
 const (
 	A3 = iota + 1 // 1
 	B3            // 2
@@ -47,6 +50,7 @@ const (
 // Using Different Data Types
 // - The first constant in the block can explicitly define a type, which all following constants
 //   will inherit.
+
 const (
 	A6 float64 = iota + 0.5 // 0.5
 	B6                      // 1.5
@@ -57,6 +61,7 @@ const (
 // - When a constant is manually assigned a value, iota continues incrementing but does not apply to
 //   the manually assigned constants.
 // - The value of iota will be reused when a new const value is assigned to it.
+
 const (
 	A7 = iota // 0 - Iota: 0
 	B7        // 1 - Iota: 1
@@ -69,6 +74,7 @@ const (
 // Using Iota in Functions
 // - We can use "iota" in constants declared in functions.
 // - The value of "iota" will be reset to 0 for each new "const" block.
+
 func UsingIotaInFunctions() {
 	const (
 		Const1 = iota // 0

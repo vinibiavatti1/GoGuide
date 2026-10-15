@@ -11,6 +11,7 @@ func LambdaFunctions() {
 	// Lambda Function
 	// - An example of a lambda function without parameters and return values.
 	// - Output: Hello, World!
+
 	fn1 := func() {
 		fmt.Println("Hello, World!")
 	}
@@ -19,6 +20,7 @@ func LambdaFunctions() {
 	// Lambda Function with Parameters and Return Value
 	// - An example of a lambda function with parameters and a return values.
 	// - Output: x: 4
+
 	fn2 := func(x int) int {
 		return x * 2
 	}
@@ -29,6 +31,7 @@ func LambdaFunctions() {
 	// - An example of an immediately invoked lambda function.
 	// - This is useful for deferred execution.
 	// - Output: 6
+
 	x = func(y int) int {
 		return y * 2
 	}(3)

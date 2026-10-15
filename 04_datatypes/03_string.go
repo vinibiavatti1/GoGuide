@@ -15,12 +15,14 @@ func DeclaringStrings() {
 
 	// Declaring a String
 	// - Output: x: Hello World!
+
 	x := "Hello World!"
 	fmt.Println("x:", x)
 
 	// Declaring a Multi-line String
 	// - We can use the backticks (`) to create a multi-line string.
 	// - Output: x: Lorem ipsum dolor sit amet...
+
 	x = `
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et aliquam 
 		magna, eu dignissim ante. Donec non semper lectus. Vivamus vel efficitur 
@@ -33,18 +35,21 @@ func DeclaringStrings() {
 	//   interpreted.
 	// - This is highly used for Regular Expressions and file paths.
 	// - Output: x: \d+\s+\w+\t\n
+
 	x = `\d+\s+\w+\t\n`
 	fmt.Println("x:", x)
 
 	// Declaring a String using Hexadecimal Notation
 	// - We can use the "\x<n>" syntax to define hexadecimal characters.
 	// - Output: x: A
+
 	x = "\x41"
 	fmt.Println("x:", x)
 
 	// Declaring a String using Octal Notation
 	// - We can use the "\<n>" syntax to define octal characters.
 	// - Output: x: A
+
 	x = "\101"
 	fmt.Println("x:", x)
 
@@ -52,12 +57,14 @@ func DeclaringStrings() {
 	// - We can create other strings by joining two or more strings.
 	// - The "+" operator is used to concatenate strings.
 	// - Output: x: Hi, John
+
 	x = "Hi, " + "John"
 	fmt.Println("x:", x)
 
 	// Escaping Strings
 	// - Some runes must be escaped to be used in a string.
 	// - Output: Escape "Example"
+
 	x = "\a" // Alert or bell
 	x = "\"" // Escape Double quote (String)
 	x = "\\" // Backslash
@@ -80,6 +87,7 @@ func StringOperations() {
 	// Retrieving String Length
 	// - We can use the "len()" function to get the length of a string.
 	// - Output: Length: 13
+
 	l := len(x)
 	fmt.Println("Length:", l)
 
@@ -89,12 +97,14 @@ func StringOperations() {
 	//   representation.
 	// - Syntax: x[<index>]
 	// - Output: 72 | H
+
 	fmt.Println(x[0], string(x[0]))
 
 	// String Slicing
 	// - We can access a substring in a string using slicing.
 	// - Note: The end index is exclusive.
 	// - Syntax: x[<start>:<end>]
+
 	fmt.Println(x[:5])  // Output: Hello
 	fmt.Println(x[7:])  // Output: World!
 	fmt.Println(x[2:4]) // Output: ll
@@ -104,6 +114,7 @@ func StringOperations() {
 	// Iterating Strings (Using standard for)
 	// - We can use the standard for loop to iterate over a string
 	// - Output: char: H e l l o...
+
 	for i := 0; i < len(x); i++ {
 		c := string(x[i])
 		fmt.Println("char:", c)
@@ -112,6 +123,7 @@ func StringOperations() {
 	// Iterating Strings (Using for-range)
 	// - The for-range loop is a more concise way to iterate over a string
 	// - Output: char: H e l l o...
+
 	for _, c := range x {
 		fmt.Println("char:", string(c))
 	}

@@ -11,4 +11,5 @@ package introduction
 // - The "go build" command will compile the Go program and generate a binary executable file.
 // - The binary executable file will be generated in the current directory.
 // - We can specify the output location and name using the "-o" flag.
+
 var _ = "go build -o build/myapp.exe main.go"

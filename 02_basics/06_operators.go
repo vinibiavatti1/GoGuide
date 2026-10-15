@@ -17,6 +17,7 @@ import "fmt"
 
 // These operators perform arithmetic operations such as addition, subtraction, multiplication, and
 // division.
+
 func ArithmeticOperators() {
 	x, y := 10, 5
 
@@ -32,6 +33,7 @@ func ArithmeticOperators() {
 //==================================================================================================
 
 // These operators are used to assign values to variables.
+
 func AssignmentOperators() {
 	x := 10
 
@@ -48,6 +50,7 @@ func AssignmentOperators() {
 //==================================================================================================
 
 // These operators compare values and return a boolean result (true or false).
+
 func ComparisonOperators() {
 	x, y := 10, 5
 
@@ -64,6 +67,7 @@ func ComparisonOperators() {
 //==================================================================================================
 
 // These operators perform logical operations, typically used with boolean values.
+
 func LogicalOperators() {
 	x, y := true, false
 
@@ -78,18 +82,21 @@ func LogicalOperators() {
 
 // These operators are used to get the memory address of a variable (using "&") and to dereference
 // pointers (using "*").
+
 func AddressOperators() {
 	x := 10
 
 	// Creating a pointer
 	// Getting the memory address of "a" (address operator "&")
 	// Output: Address: 0xc000067f30
+
 	ptr := &x
 	fmt.Println("Address:", ptr)
 
 	// Dereferencing a Pointer
 	// Getting the value stored at the memory address (dereference operator "*")
 	// Output: Value: 10
+
 	fmt.Println("Value:", *ptr)
 }
 
@@ -98,6 +105,7 @@ func AddressOperators() {
 //==================================================================================================
 
 // These operators perform operations at the bit level on integer values.
+
 func BitwiseOperators() {
 	x := 60 // 0011 1100
 	y := 13 // 0000 1101

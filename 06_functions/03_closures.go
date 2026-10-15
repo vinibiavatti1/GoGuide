@@ -11,6 +11,7 @@ import "fmt"
 // Closure Function
 // - The closure function below declares a "private" variable, keeping state across multiple
 //   invocations.
+
 func Counter() func() int {
 	x := -1
 	return func() int {
@@ -25,6 +26,7 @@ func Counter() func() int {
 // - This happens because the variable `x` escapes to the heap and persists in memory as long as the
 //   closure references it.
 // - Output: 0 1 2
+
 func UsingClosures() {
 	next := Counter()
 	fmt.Println(next(), next(), next())

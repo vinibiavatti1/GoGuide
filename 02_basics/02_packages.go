@@ -10,6 +10,7 @@ package basics
 // - To declare a package, we use the "package" statement.
 // - The package statement must be the first line in the file.
 // - Usually, the package name is the same as the directory name.
+
 var _ = `
 package user
 `
@@ -17,6 +18,7 @@ package user
 // Main Package
 // - The main package is the entry point of a Go program.
 // - When the application is run, the main package is searched for the main function.
+
 var _ = `
 package main
 `
@@ -26,12 +28,14 @@ package main
 // - The import statement must be after the package statement.
 // - The imported package will be referenced by its name:
 // - Ex: fmt.Println().
+
 var _ = `
 import "fmt"
 `
 
 // Importing Multiple Packages
 // - To import multiple packages, we use parentheses.
+
 var _ = `
 import (
 	"fmt"
@@ -42,6 +46,7 @@ import (
 // Importing Packages with Aliases
 // - We can define an alias for a package.
 // - This alias will replace the package name, and the alias will be used to reference the package.
+
 var _ = `
 import (
 	m "math"
@@ -52,6 +57,7 @@ import (
 // - We can import a package with a dot.
 // - This will allow us to use the package's exported identifiers without a prefix:
 // - Ex: Println() instead of fmt.Println().
+
 var _ = `
 import (
 	. "fmt"
@@ -61,6 +67,7 @@ import (
 // Importing Packages with Blank Identifier
 // - We can import a package with a blank identifier.
 // - This will allow us to execute the package's init() function without using the package.
+
 var _ = `
 import (
 	_ "math"
@@ -73,6 +80,7 @@ import (
 // - To import the math package, we have to use the following import statement:
 // - Note: Even though the directory has no package definition, the package name is the same as the
 //   directory name.
+
 var _ = `
 import "github.com/user/app/directory/math"
 `

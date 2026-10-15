@@ -16,6 +16,7 @@ import "fmt"
 // - The struct below has two fields: "Name" and "surname".
 // - The first letter of the field name determines its visibility: if it is capitalized, it is
 //   public, if not, it is private.
+
 type Person struct {
 	Name    string // Public
 	surname string // Private (Not capitalized)
@@ -27,6 +28,7 @@ type Person struct {
 // - This allows the "Employee" to access the "Person" fields, along with its own additional field,
 //   like the salary.
 // - We can omit the name of the composition to use the same name of the type.
+
 type Employee struct {
 	*Person // Pointer to Person, allowing direct access to Name and Surname fields
 	Salary  float64
@@ -36,6 +38,7 @@ type Employee struct {
 // - Constructors are methods responsible for creating struct instances.
 // - As a convention, they are named "New" followed by the struct name.
 // - They are used to initialize the struct fields and return a pointer to the struct.
+
 func NewEmployee(name, surname string, salary float64) *Employee {
 	return &Employee{
 		Person: &Person{
@@ -52,6 +55,7 @@ func NewEmployee(name, surname string, salary float64) *Employee {
 //   the method name.
 // - In this example, the method "FullName" is associated with the "Employee" struct and takes a
 //   pointer receiver (e *Employee).
+
 func (e *Employee) FullName() string {
 	return e.Name + e.surname
 }
@@ -62,6 +66,7 @@ func (e *Employee) FullName() string {
 //   struct.
 // - The "SetSurname" method is a setter for the "surname" field.
 // - Note: In Go, we don't use the "Get" prefix for getters.
+
 func (p *Person) Surname() string { // Getter
 	return p.surname
 }
@@ -77,6 +82,7 @@ func UsingStructs() {
 
 	// Creating an Instance
 	// - Creating an instance of "Employee", initializing the "Person" field using a pointer.
+
 	employee1 := &Employee{
 		Person: &Person{
 			Name:    "John",
@@ -87,12 +93,14 @@ func UsingStructs() {
 
 	// Creating an Instance Using Constructor Method
 	// - We can also use the constructor method to create an instance of Employee.
+
 	employee2 := NewEmployee("John", "Duo", 2000.0)
 
 	// Accessing Public Data
 	// - Embedded fields can be accessed directly from the "Employee" struct.
 	// - Note that the "Name" field belongs to the "Person" struct, but it can be accessed directly
 	//   from the "Employee" struct.
+
 	name1 := employee1.Person.Name // Accessing emdebbed
 	name2 := employee1.Name        // Accessing directly
 	fmt.Println(name1, name2)      // Output: John John
@@ -100,6 +108,7 @@ func UsingStructs() {
 	// Calling Methods
 	// - Calling the "FullName" method associated to the employee.
 	// - Output: fullname: JohnDuo
+
 	fullname := employee2.FullName()
 	fmt.Println("fullname:", fullname)
 
@@ -108,6 +117,7 @@ func UsingStructs() {
 	// - Note that the "Surname" method belongs to the "Person" struct, but it can be accessed
 	//   directly from the "Employee" struct.
 	// - Output: Duo Duo
+
 	surname1 := employee1.Person.Surname() // Accessing emdebbed
 	surname2 := employee1.Surname()        // Accessing directly
 	fmt.Println(surname1, surname2)
@@ -116,6 +126,7 @@ func UsingStructs() {
 	// - We can assign a new value to a public field of the struct.
 	// - We can also set the value of embedded fields directly.
 	// - Output: Salary: 2500.0
+
 	employee1.Salary = 2500.0   // Setting Salary
 	employee1.Name = "John Doe" // Setting Name directly
 	fmt.Println("Salary:", employee1.Salary)
@@ -123,6 +134,7 @@ func UsingStructs() {
 	// Local Structs
 	// - We can declare a struct inside a function.
 	// - This struct will only be available inside the function.
+
 	type user struct {
 		Name string
 	}
@@ -130,6 +142,7 @@ func UsingStructs() {
 	// Creating an Instance of Local Struct
 	// - The local struct is only available inside the function
 	// - Output: otherPerson: {John Duo}
+
 	_user := &user{
 		Name: "John Duo",
 	}
@@ -140,6 +153,7 @@ func UsingStructs() {
 	// - They are useful for quick and temporary data structures.
 	// - Note that the struct below is not named, but it has fields.
 	// - Output: person: {John Duo}
+
 	person := struct {
 		Name string
 	}{

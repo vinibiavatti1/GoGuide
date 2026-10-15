@@ -22,24 +22,28 @@ func UsingPointers() {
 	// - We will declare a pointer to hold the address of x.
 	// - We can use the "&" operator to get the address of x.
 	// - Output: p: 0xc00000a0b8
+
 	p := &x
 	fmt.Println("p:", p)
 
 	// Dereferencing a Pointer
 	// - We can use the "*" operator to dereference the pointer and get the value at the address.
 	// - Output: y: 5
+
 	y := *p
 	fmt.Println("y:", y)
 
 	// Changing the Value of a Pointer
 	// - Functions can receive pointers instead of values, to manipulate the original variable.
 	// - Output: x: 10
+
 	changeValue(p)
 	fmt.Println("x:", *p)
 
 	// Pointers Can Have Nil Values
 	// - A pointer can be nil, meaning it doesn't point to any address.
 	// - Output: p: <nil>
+
 	p = nil
 	fmt.Println("p:", p)
 }
@@ -53,6 +57,7 @@ func UsingPointers() {
 // - Passing a pointer allows functions to modify the original data without copying it.
 // - Changes made through the pointer will affect the original variable.
 // - In the example below, the "x" variable will be modified outside the function.
+
 func changeValue(x *int) {
 	*x = 10
 }
