@@ -2,7 +2,7 @@
 // Go supports recursion, which is a function calling itself.
 // Recursion is a powerful technique for solving problems that can be broken down into smaller subproblems.
 
-package patterns
+package gopatterns
 
 import "fmt"
 

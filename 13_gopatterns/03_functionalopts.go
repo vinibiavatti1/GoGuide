@@ -5,7 +5,7 @@
 // The idea is to define a function type that takes a pointer to the struct you want to configure,
 // and then create a series of functions that implement this type.
 
-package patterns
+package gopatterns
 
 import "fmt"
 

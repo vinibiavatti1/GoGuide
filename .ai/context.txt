@@ -1,0 +1,1037 @@
+Context: I am creating a repository with several Go examples organized into separate ".go"
+files (such as string.go, arrays.go, if.go, for.go, etc.). The files always follow the exact
+structure below. Each case represents a specific feature to demonstrate, such as getting the length
+of a string or showing how a for loop works. I need your help to generate the upcoming contents
+for the guide.
+
+----------------------------------------------------------------------------------------------------
+- Format
+----------------------------------------------------------------------------------------------------
+
+// Title
+// - Sentence...
+// - Sentence...
+// - Sentence...
+
+package <name>
+
+import "fmt"
+
+// Case 1
+// - Sentence...
+// - Sentence...
+// - Output: <output>
+
+<code>
+
+// Case 2
+// - Sentence...
+// - Sentence...
+// - Output: <output>
+
+<code>
+
+// Case 3
+// - Sentence...
+// - Sentence...
+// - Output: <output>
+
+<code>
+
+----------------------------------------------------------------------------------------------------
+- Sample (int.go)
+----------------------------------------------------------------------------------------------------
+
+// Integer
+// - An integer (int) is a fundamental numeric datatype in Go, used to represent integer numbers.
+// - Signed integers can represent positive and negative numbers.
+// - Unsigned integers can only represent positive numbers.
+// - The byte and rune types are aliases for integer types in Go.
+
+package datatypes
+
+import "fmt"
+
+//==================================================================================================
+// Declaring Integers
+//==================================================================================================
+
+func DeclaringIntegers() {
+
+	// Declaring an Integer
+	// - The "int" type is used to represent integers.
+	// - The size depends on the platform (32 or 64 bits).
+	// - Output: x: 1
+
+	x := 1
+	fmt.Println("x:", x)
+
+	// Declaring an Integer Using Binary Notation
+	// - We can use the "0b<n>" notation to define integers in binary.
+	// - Output: x: 10
+
+	x = 0b1010
+	fmt.Println("x:", x)
+
+	// Declaring an Integer Using Hexadecimal Notation
+	// - We can use the "0x<n>" notation to define integers in hexdecimal.
+	// - Output: x: 4095
+
+	x = 0xFFF
+	fmt.Println("x:", x)
+
+	// Declaring an Integer Using Octal Notation
+	// - We can use the "0o<n>" notation to define integers in octal.
+	// - Output: x: 511
+
+	x = 0o777
+	fmt.Println("x:", x)
+
+	// Declaring an Integer Using a Rune
+	// - Since a rune is an alias for int32, we can use it to represent integers.
+	// - A rune is a Unicode code point.
+	// - Output: x: 65
+
+	x = 'A'
+	fmt.Println("x:", x)
+
+	// Declaring an Integer Using Underscores
+	// - We can use the underscore "_" to separate digits and improve readability.
+	// - Output: x: 100000000
+
+	x = 100_000_000
+	fmt.Println("x:", x)
+
+	// Declaring an Computed Integer
+	// - We can create integers from expressions which will be computed to generate the result.
+	// - Output: x: 14
+
+	x = 2 + 3*4
+	fmt.Println("x:", x)
+
+	// Declaring other Integer Types
+	// - Other integer types can be used to represent different sizes.
+	// - The unsigned integer types can only represent positive numbers.
+
+	var _ int8 = 1    // 8-bit: -128 to 127
+	var _ int16 = 1   // 16-bit: -32768 to 32767
+	var _ int32 = 1   // 32-bit: -2147483648 to 2147483647
+	var _ int64 = 1   // 64-bit: -9223372036854775808 to 9223372036854775807
+	var _ uint = 1    // 32/64-bit Unsigned integer (default)
+	var _ uint8 = 1   // 8-bit: 0 to 255
+	var _ uint16 = 1  // 16-bit: 0 to 65535
+	var _ uint32 = 1  // 32-bit: 0 to 4294967295
+	var _ uint64 = 1  // 64-bit: 0 to 18446744073709551615
+	var _ uintptr = 1 // Memory Address Type (32 or 64 bits)
+	var _ byte = 1    // Alias for uint8
+	var _ rune = 1    // Alias for int32 (Unicode code point)
+}
+
+//==================================================================================================
+// Integer Operations
+//==================================================================================================
+
+func IntegerOperations() {
+
+	// Addition
+	// - The "+" operator is used to add two integers.
+	// - Output: x: 10
+
+	x := 7 + 3
+	fmt.Println("x:", x)
+
+	// Subtraction
+	// The "-" operator is used to subtract two integers.
+	// Output: x: 4
+
+	x = 7 - 3
+	fmt.Println("x:", x)
+
+	// Multiplication
+	// The "*" operator is used to multiply two integers.
+	// Output: x: 21
+
+	x = 7 * 3
+	fmt.Println("x:", x)
+
+	// Division
+	// The "/" operator is used to divide two integers.
+	// Output: x: 3
+
+	x = 9 / 3
+	fmt.Println("x:", x)
+
+	// Modulo Operation (Remainder)
+	// The "%" operator is used to get the remainder of a division.
+	// Output: x: 1
+
+	x = 3 % 2
+	fmt.Println("x:", x)
+}
+
+//==================================================================================================
+// Integer Conversions
+//==================================================================================================
+
+func IntegerConversions() {
+
+	// Widening conversion (expanding the size)
+	// - This example expands the size from 8-bit to 16-bit.
+	// - Output: int8: 127 int16: 127
+
+	var x1 int8 = 127
+	var y1 int16 = int16(x1)
+	fmt.Println("int8:", x1, "int16:", y1)
+
+	// Narrowing conversion (truncating excess bits)
+	// - This example reduces the size from 16-bit to 8-bit.
+	// - Output: int16: 32767 int8: -1
+
+	var x2 int16 = 32767
+	var y2 int8 = int8(x2)
+	fmt.Println("int16:", x2, "int8:", y2)
+
+	// Signed to unsigned conversion
+	// - This example changes an signed integer to unsigned.
+	// - Output: int8: -1 uint8: 255
+
+	var x3 int8 = -1
+	var y3 uint8 = uint8(x3)
+	fmt.Println("int8:", x3, "uint8:", y3)
+
+	// Unsigned to signed conversion
+	// - This example changes an unsigned integer to signed.
+	// - Output: uint8: 255 int8: -1
+
+	var x4 uint8 = 255
+	var y4 int8 = int8(x4)
+	fmt.Println("uint8:", x4, "int8:", y4)
+}
+
+----------------------------------------------------------------------------------------------------
+- Sample (arrays.go)
+----------------------------------------------------------------------------------------------------
+
+// Arrays
+// - Arrays are a collection of elements of the same type.
+// - They are fixed in size and have a zero-based index.
+// - Syntax: [<length>]<datatype>{<values>}
+
+package containers
+
+import "fmt"
+
+//==================================================================================================
+// Declaring Arrays
+//==================================================================================================
+
+func DeclaringArrays() {
+
+	// Declaring an Array
+	// - All elements are initialized with the zero value of the type.
+	// - Note: If the length is not specified, a slice will be created instead.
+	// - Output: x: [0 0 0]
+
+	x := [3]int{}
+	fmt.Println("x:", x)
+
+	// Declaring an Array with Predefined Values
+	// - We can initialize the array with predefined values.
+	// - Output: x: [1 2 3]
+
+	x = [3]int{1, 2, 3}
+	fmt.Println("x:", x)
+
+	// Declaring an Array with Inferred Length
+	// - We can use the ellipsis operator "..." to infer the length of the array based on the number
+	//   of elements.
+	// - Output: x: [1 2 3] len: 3
+
+	x = [...]int{1, 2, 3}
+	fmt.Println("x:", x, "len:", len(x))
+
+	// Declaring an Array Specifying Values by Index (:)
+	// - We can specify values by index during the initialization by using the ":" operator.
+	// - Output: x: [1 0 3]
+
+	x = [3]int{0: 1, 2: 3}
+	fmt.Println("x:", x)
+
+	// Declaring an Array of "any" Type
+	// - We can declare an array of type "any" to store values of any type.
+	// - The "any" type is equivalent to the "interface{}" type in Go.
+	// - Output: y: [1 Hello true]
+
+	y := [3]any{1, "Hello", true}
+	fmt.Println("y:", y)
+}
+
+//==================================================================================================
+// Array Operations
+//==================================================================================================
+
+func ArrayOperations() {
+	x := [3]string{"A", "B", "C"}
+
+	// Acessing Elements
+	// - We can access elements using indexes [i].
+	// - Output: Element: B
+
+	y := x[1]
+	fmt.Println("Element:", y)
+
+	// Slicing Arrays
+	// - We can slice arrays using the [start:end] syntax.
+	// - Note: The end index is exclusive.
+	// - Syntax: x[<start>:<end>]
+
+	fmt.Println(x[:2])  // Output: [A B]
+	fmt.Println(x[1:])  // Output: [B C]
+	fmt.Println(x[1:2]) // Output: [B]
+	fmt.Println(x[:])   // Output: [A B C] (Same reference)
+	fmt.Println(x[0:0]) // Output: [] (empty array)
+
+	// Retrieving Length
+	// - We can get the length of an array using the "len()" builtin function.
+	// - Output: Len: 3
+
+	l := len(x)
+	fmt.Println("Len:", l)
+
+	// Mutating Elements
+	// - We can mutate elements using indexes [i].
+	// - Note: Arrays are fixed in size, so we cannot append or remove elements.
+	// - Output: x: [A Z C]
+
+	x[1] = "Z"
+	fmt.Println("x:", x)
+
+	// Iterating Arrays (Using standard for)
+	// - We can use the standard for loop to iterate over an array.
+	// - Output: 0 A | 1 Z | 2 C
+
+	for i := 0; i < len(x); i++ {
+		fmt.Println(i, x[i])
+	}
+
+	// Iterating Arrays (Using for-range)
+	// - We can use the for-range loop to iterate over an array.
+	// - Output: 0 A | 1 Z | 2 C
+
+	for i, v := range x {
+		fmt.Println(i, v)
+	}
+}
+
+----------------------------------------------------------------------------------------------------
+- Sample (library/slices.go)
+----------------------------------------------------------------------------------------------------
+
+// Slices
+// - The slices package provides a set of functions for manipulating slices.
+// - It includes functions for filtering, mapping, and reducing slices.
+// - It also includes functions for finding the minimum and maximum values in a slice.
+
+package library
+
+import (
+	"cmp"
+	"fmt"
+	"slices"
+	"strings"
+)
+
+//==================================================================================================
+// Element Functions
+//==================================================================================================
+
+func SliceElementFunctions() {
+
+	// Insert
+	// - Insert inserts the values v... into s at index i, returning the modified slice.
+	// - Output: [A X Y B C] (X and Y are inserted at index 1)
+
+	x := []string{"A", "B", "C"}
+	x = slices.Insert(x, 1, "X", "Y")
+	fmt.Println(x)
+
+	// Concat
+	// - Concat returns a new slice concatenating the passed in slices.
+	// - Output: [A B C D E F]
+
+	x = []string{"A", "B", "C"}
+	x = slices.Concat(x, []string{"D", "E", "F"})
+	fmt.Println(x)
+
+	// Delete
+	// - Delete removes the elements s[i:j] from s, returning the modified slice
+	// - Output: [A D E] (B and C are removed)
+
+	x = []string{"A", "B", "C", "D", "E"}
+	x = slices.Delete(x, 1, 3)
+	fmt.Println(x)
+
+	// DeleteFunc
+	// - DeleteFunc works like Delete, but uses a custom comparison function.
+	// - Output: [A C] (B is removed)
+
+	x = []string{"A", "B", "C"}
+	x = slices.DeleteFunc(x, func(a string) bool {
+		return a == "B"
+	})
+	fmt.Println(x)
+
+	// Repeat
+	// - Repeat returns a new slice that repeats the provided slice the given number of times.
+	// - Output: [A B C A B C]
+
+	x = []string{"A", "B", "C"}
+	x = slices.Repeat(x, 2)
+	fmt.Println(x)
+
+	// Replace
+	// - Replace replaces the elements s[i:j] by the given v, and returns the modified slice.
+	// - Output: [A X X C]
+
+	x = []string{"A", "B", "C", "D"}
+	x = slices.Replace(x, 1, 3, "X")
+	fmt.Println(x)
+
+	// Compact
+	// - Compact replaces consecutive runs of equal elements with a single copy.
+	// - This is like the uniq command found on Unix.
+	// - Compact modifies the contents of the slice s and returns the modified slice, which may have
+	//   a smaller length.
+	// - Compact zeroes the elements between the new length and the original length.
+	// - Output: [A B C] (length is 3, capacity is 6)
+
+	x = []string{"A", "A", "B", "B", "C", "C"}
+	x = slices.Compact(x)
+	fmt.Println(x)
+
+	// CompactFunc
+	// - CompactFunc works like Compact, but uses a custom comparison function.
+	// - Output: [A b C] (length is 3, capacity is 6)
+
+	x = []string{"A", "a", "b", "B", "C", "c"}
+	x = slices.CompactFunc(x, strings.EqualFold)
+	fmt.Println(x)
+
+	// Reverse
+	// - Reverse reverses the elements of the slice in place.
+	// - Note: It modifies the original slice.
+	// - Output: [C B A] (slices are reversed)
+
+	x = []string{"A", "B", "C"}
+	slices.Reverse(x)
+	fmt.Println(x)
+
+	// AppendSeq
+	// - AppendSeq appends the values from seq to the slice and returns the extended slice.
+	// - Output: [A B C A B C]
+
+	x = []string{"A", "B", "C"}
+	x = slices.AppendSeq(x, slices.Values(x))
+	fmt.Println(x)
+
+	// Clone
+	// - Clone returns a copy of the slice. The elements are copied using assignment, so this is a
+	//   shallow clone.
+	// - The result may have additional unused capacity.
+	// - Output: [A B C]
+
+	x = []string{"A", "B", "C"}
+	clone := slices.Clone(x)
+	fmt.Println(clone)
+}
+
+//==================================================================================================
+// Index Functions
+//==================================================================================================
+
+func SliceIndexFunctions() {
+
+	// Index
+	// - Index returns the index of the first occurrence of v in s, or -1 if not present.
+	// - Output: 1 (B is at index 1)
+
+	x := []string{"A", "B", "C"}
+	i := slices.Index(x, "B")
+	fmt.Println(i)
+
+	// IndexFunc
+	// - IndexFunc returns the first index i satisfying f(s[i]), or -1 if none do.
+	// - Output: 1 (B is at index 1)
+
+	x = []string{"A", "b", "C"}
+	i = slices.IndexFunc(x, func(a string) bool {
+		return strings.ToUpper(a) == "B"
+	})
+	fmt.Println(i)
+}
+
+//==================================================================================================
+// Search Functions
+//==================================================================================================
+
+func SliceSearchFunctions() {
+
+	// Binary Seach
+	// - BinarySearch searches for target in a sorted slice and returns the earliest position where
+	//   target is found, or the position where target would appear in the sort order.
+	// - It also returns a bool saying whether the target is really found in the slice.
+	// - The slice must be sorted in increasing order.
+	// - Output: 1 true
+
+	x := []string{"A", "B", "C"}
+	i, found := slices.BinarySearch(x, "B")
+	fmt.Println(i, found)
+
+	// Binary Search Func
+	// - BinarySearchFunc works like BinarySearch, but uses a custom comparison function.
+	// - The comparison function must return a comparison result: (-1, 0 or 1).
+	// - Output: 1 true
+
+	type Person struct {
+		ID   int
+		Name string
+	}
+	y := []*Person{
+		{ID: 1, Name: "John"},
+		{ID: 2, Name: "Maria"},
+	}
+	i, found = slices.BinarySearchFunc(y, &Person{Name: "Maria"}, func(a *Person, b *Person) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
+	fmt.Println(i, found)
+
+	// Contains
+	// - Contains reports whether v is present in s.
+	// - Output: true (B is present)
+
+	x = []string{"A", "B", "C"}
+	has := slices.Contains(x, "B")
+	fmt.Println(has)
+
+	// ContainsFunc
+	// - ContainsFunc works like Contains, but uses a custom comparison function.
+	// - Output: true (B is present)
+
+	x = []string{"A", "B", "C"}
+	has = slices.ContainsFunc(x, func(a string) bool {
+		return a == "B"
+	})
+	fmt.Println(has)
+
+	// Max
+	// - Max returns the maximal value in x.
+	// - Output: 53 (maximal value is 53)
+
+	z := []int{29, 53, 42}
+	max := slices.Max(z)
+	fmt.Println(max)
+
+	// MaxFunc
+	// - MaxFunc works like Max, but uses a custom comparison function.
+	// - Output: 53 (maximal value is 53)
+
+	z = []int{29, 53, 42}
+	max = slices.MaxFunc(z, func(a int, b int) int {
+		return a - b
+	})
+	fmt.Println(max)
+
+	// Min
+	// - Min returns the minimal value in x.
+	// - Output: 29 (minimal value is 29)
+
+	min := slices.Min(z)
+	fmt.Println(min)
+
+	// MinFunc
+	// - MinFunc works like Min, but uses a custom comparison function.
+	// - Output: 29 (minimal value is 29)
+
+	min = slices.MinFunc(z, func(a int, b int) int {
+		return a - b
+	})
+	fmt.Println(min)
+}
+
+//==================================================================================================
+// Compare Functions
+//==================================================================================================
+
+func SliceCompareFunctions() {
+
+	// Compare
+	// - Compare compares the elements of s1 and s2, using cmp.Compare on each pair of elements.
+	// - Output: 0 (equal)
+
+	x := []string{"A", "B", "C"}
+	cmp := slices.Compare(x, []string{"A", "B", "C"})
+	fmt.Println(cmp)
+
+	// CompareFunc
+	// - CompareFunc works like Compare, but uses a custom comparison function.
+	// - Output: 0 (equal)
+
+	x = []string{"A", "B", "C"}
+	cmp = slices.CompareFunc(x, []string{"a", "b", "c"}, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(cmp)
+
+	// Equal
+	// - Equal reports whether two slices are equal.
+	// - Output: true (slices are equal)
+
+	x = []string{"A", "B", "C"}
+	eq := slices.Equal(x, []string{"A", "B", "C"})
+	fmt.Println(eq)
+
+	// EqualFunc
+	// - EqualFunc works like Equal, but uses a custom comparison function.
+	// - Output: true (slices are equal)
+
+	x = []string{"A", "B", "C"}
+	eq = slices.EqualFunc(x, []string{"a", "b", "c"}, strings.EqualFold)
+	fmt.Println(eq)
+}
+
+//==================================================================================================
+// Sort Functions
+//==================================================================================================
+
+func SliceSortFunctions() {
+
+	// Sort
+	// - Sort sorts a slice of any ordered type in ascending order.
+	// - Note: It modifies the original slice.
+	// - Output: [A B C] (slices are sorted)
+
+	x := []string{"C", "A", "B"}
+	slices.Sort(x)
+	fmt.Println(x)
+
+	// SortFunc
+	// - SortFunc sorts a slice of any type using the provided comparison function.
+	// - Note: It modifies the original slice.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	slices.SortFunc(x, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(x)
+
+	// SortStableFunc
+	// - SortStableFunc sorts the slice x while keeping the original order of equal elements, using
+	//   cmp to compare elements in the same way as SortFunc.
+	// - Note: It modifies the original slice.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	slices.SortStableFunc(x, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(x)
+
+	// Sorted
+	// - Sorted collects values from seq into a new slice, sorts the slice, and returns it.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	sorted := slices.Sorted(slices.Values(x))
+	fmt.Println(sorted)
+
+	// SortedFunc
+	// - SortedFunc collects values from seq into a new slice, sorts the slice using the comparison
+	//   function, and returns it.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	sorted = slices.SortedFunc(slices.Values(x), func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(sorted)
+
+	// SortedStableFunc
+	// - SortedStableFunc collects values from seq into a new slice.
+	// - It then sorts the slice while keeping the original order of equal elements, using the
+	//   comparison function to compare elements.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	sorted = slices.SortedStableFunc(slices.Values(x), func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(sorted)
+
+	// IsSorted
+	// - IsSorted reports whether x is sorted in ascending order.
+	// - Output: true (slices are sorted)
+
+	x = []string{"A", "B", "C"}
+	is := slices.IsSorted(x)
+	fmt.Println(is)
+
+	// IsSortedFunc
+	// - IsSortedFunc works like IsSorted, but uses a custom comparison function.
+	// - Output: true (slices are sorted)
+
+	x = []string{"A", "b", "C", "d"}
+	is = slices.IsSortedFunc(x, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(is)
+}
+
+//==================================================================================================
+// Seq Functions
+//==================================================================================================
+
+func SliceSeqFunctions() {
+
+	// All (slice -> Seq2)
+	// - All returns an iterator over index-value pairs in the slice in the usual order.
+	// - Output: 0 A, 1 B, 2 C
+
+	x := []string{"A", "B", "C"}
+	for i, v := range slices.All(x) {
+		fmt.Println(i, v)
+	}
+
+	// Values (slice -> Seq)
+	// - Values returns an iterator that yields the slice elements in order.
+	// - Output: A B C
+
+	x = []string{"A", "B", "C"}
+	for v := range slices.Values(x) {
+		fmt.Println(v)
+	}
+
+	// Collect (Seq -> slice)
+	// - Collect collects values from seq into a new slice and returns it.
+	// - Output: [A B C]
+
+	x = []string{"A", "B", "C"}
+	y := slices.Collect(slices.Values(x))
+	fmt.Println(y)
+}
+
+//==================================================================================================
+// Other Functions
+//==================================================================================================
+
+func SlicesOtherFunctions() {
+
+	// Backward
+	// - Backward returns an iterator over index-value pairs in the slice, traversing it backward
+	//   with descending indices.
+	// - Output: 2 C, 1 B, 0 A
+
+	x := []string{"A", "B", "C"}
+	for i, v := range slices.Backward(x) {
+		fmt.Println(i, v)
+	}
+
+	// Chunk
+	// - Chunk returns an iterator over consecutive sub-slices of up to n elements of s.
+	// - All but the last sub-slice will have size n. All sub-slices are clipped to have no capacity
+	//   beyond the length.
+	// - If s is empty, the sequence is empty: there is no empty slice in the sequence. Chunk panics
+	//   if n is less than 1.
+	// - Output: [A B], [C D], [E]
+
+	x = []string{"A", "B", "C", "D", "E"}
+	chunk := slices.Chunk(x, 2)
+	for v := range chunk {
+		fmt.Println(v)
+	}
+
+	// Clip
+	// - Clip removes unused capacity from the slice, returning s[:len(s):len(s)].
+	// - Output: 3 (capacity is 3)
+
+	x = make([]string, 0, 10) // (capacity is 10)
+	x = append(x, "A", "B", "C")
+	x = slices.Clip(x)
+	fmt.Println(cap(x))
+
+	// Grow
+	// - Grow increases the slice's capacity, if necessary, to guarantee space for another n
+	//   elements.
+	// - Output: 5 (capacity is 5)
+
+	x = []string{"A", "B", "C"}
+	x = slices.Grow(x, 2)
+	fmt.Println(cap(x))
+}
+
+----------------------------------------------------------------------------------------------------
+- Sample (concurrency.go)
+----------------------------------------------------------------------------------------------------
+
+// Concurrency
+// - Concurrency is the ability of a program to make progress on multiple tasks at the same time.
+// - In Go, concurrency is achieved through goroutines and channels.
+// - Goroutines are lightweight threads managed by the Go runtime. They are created using the "go"
+//   keyword followed by a statement.
+// - Channels are used to communicate between goroutines. They can be thought of as pipes that
+//   connect goroutines.
+// - If a channel is unbuffered, the sending goroutine will block until the receiving goroutine is
+//   ready to receive the value.
+// - If a channel is buffered, the sending goroutine will block only if the buffer is full.
+// - Syntax:
+//   - chan <type>    : Bidirectional channel
+//   - <-chan <type>  : Receive-only channel
+//   - chan<- <type>  : Send-only channel
+//   - go <statement> : Start a new goroutine
+//   - <-ch           : Receive from channel ch
+//   - ch <- <value>  : Send value to channel ch
+
+package concurrency
+
+import (
+	"fmt"
+	"time"
+)
+
+//==================================================================================================
+// Declaring Channels
+//==================================================================================================
+
+// Declaring a Bidirectional Channel
+// - A bidirectional channel can be used to send and receive values of a specific type.
+
+var _ chan int
+
+// Declaring a Send-Only Channel
+// - A send-only channel can only be used to send values of a specific type.
+// - Only accepts the send operation "ch <- value".
+
+var _ chan<- int
+
+// Declaring a Receive-Only Channel
+// - A receive-only channel can only be used to receive values of a specific type.
+// - Only accepts the receive operation "<-ch".
+
+var _ <-chan int
+
+//==================================================================================================
+// Declaring Goroutines
+//==================================================================================================
+
+// Declaring a Goroutine
+// - A goroutine is a lightweight thread managed by the Go runtime.
+// - It is used to run functions concurrently.
+// - The "go" keyword followed by a function call starts a new goroutine.
+
+func StartGoroutines() {
+
+	// Start a Goroutine
+	// - This will run the print function concurrently.
+	// - Output: Hello
+
+	go fmt.Println("Hello")
+
+	// Start a Goroutine with Function
+	// - We can also start a goroutine with a function.
+	// - Note that the function must be called with parentheses.
+	// - Output: Hello
+
+	go func() {
+		fmt.Println("Hello")
+	}()
+}
+
+//==================================================================================================
+// Communicating With Channels
+//==================================================================================================
+
+// Communicating with Channels
+// - Channels are used to communicate between goroutines.
+// - They can be thought of as pipes that connect goroutines.
+
+func CommunicatingWithChannels() {
+
+	// Declaring a Channel
+	// - We will declare a channel to be used for communication.
+	// - We can use the "make" function to create a channel.
+
+	ch := make(chan int)
+
+	// Start a Goroutine with a Channel
+	// - Note that the goroutine will send a value to the channel.
+
+	go func() {
+		ch <- 42
+	}()
+
+	// Receiving from a Channel
+	// - We can receive a value from the channel using the "<-ch" syntax.
+	// - Note: It will lock the current thread until a value is received from the channel.
+	// - Output: 42
+
+	x := <-ch
+	fmt.Println(x)
+}
+
+//==================================================================================================
+// Using Multiple Channels
+//==================================================================================================
+
+// Using Multiple Channels (Select)
+// - The select statement is used to wait on multiple channel operations.
+// - It can also be used to avoid thread blocking when waiting for a channel to be ready.
+// - It is similar to a switch statement, but for channels.
+
+func UsingMultipleChannels() {
+	ch1 := make(chan int)
+	ch2 := make(chan int)
+
+	// Start Goroutines with Channels
+	// - Note that the goroutines will send values to the channels.
+
+	go func() {
+		ch1 <- 4
+	}()
+	go func() {
+		ch2 <- 8
+	}()
+
+	// Using Select Statement
+	// - We can use the select statement to wait on multiple channel operations.
+	// - The value received depends on which channel is ready first.
+	// - Output: Received from ch1: 4
+
+	select {
+	case x := <-ch1:
+		fmt.Println("Received from ch1:", x)
+	case y := <-ch2:
+		fmt.Println("Received from ch2:", y)
+	}
+}
+
+//==================================================================================================
+// Skip Channel Waiting
+//==================================================================================================
+
+// Skip Channel Waiting
+// - We can use the "select" statement to skip waiting for a channel to be ready.
+
+func SkipChannelWaiting() {
+	ch := make(chan int)
+
+	// Start a Goroutine with a Channel
+	// - We will sleep for 1 second before sending a value to the channel.
+
+	go func() {
+		time.Sleep(time.Second)
+		ch <- 42
+	}()
+
+	// Using Select Statement
+	// - We can use the select statement to skip waiting for a channel to be ready.
+	// - If the channel is not ready, the default case will be executed.
+	// - Output: No value received from ch | Received from ch: 42
+
+	for {
+		select {
+		case x := <-ch:
+			fmt.Println("Received from ch:", x)
+			return
+		default:
+			fmt.Println("No value received from ch")
+			time.Sleep(time.Second)
+		}
+	}
+}
+
+//==================================================================================================
+// Unbuffered Channels
+//==================================================================================================
+
+// Unbuffered Channels
+// - Unbuffered channels are used for synchronous communication between goroutines.
+// - They block the sending goroutine until the receiving goroutine is ready to receive the value.
+
+func UnbufferedChannels() {
+	ch := make(chan int)
+
+	// Start a Goroutine with a Channel
+	// - Note that two values are sent to the channel.
+
+	go func() {
+		fmt.Println("Send: 1")
+		ch <- 1
+		fmt.Println("Send: 2")
+		ch <- 2
+	}()
+
+	// Receiving from a Channel
+	// - Note that the main goroutine will block until a value is received from the channel.
+	// - The goroutine will also block until the main goroutine is ready to receive the value.
+	// - This is the key feature of unbuffered channels.
+	// - Output: Send: 1 | Received: 1 | Send: 2 | Received: 2
+
+	time.Sleep(time.Second)
+	x := <-ch
+	fmt.Println("Received:", x)
+	time.Sleep(time.Second)
+	x = <-ch
+	fmt.Println("Received:", x)
+}
+
+//==================================================================================================
+// Buffered Channels
+//==================================================================================================
+
+// Buffered Channels
+// - Buffered channels are used for asynchronous communication between goroutines.
+// - They allow sending and receiving values without blocking the sending goroutine until the buffer
+//   is full.
+
+func BufferedChannels() {
+
+	// Declaring a Buffered Channel
+	// - To create a buffered channel, we can use the "make" function with a buffer size.
+
+	ch := make(chan int, 2)
+
+	// Start a Goroutine with a Buffered Channel
+	// - Note that two values are sent to the channel.
+
+	go func() {
+		fmt.Println("Sent: 1")
+		ch <- 1
+		fmt.Println("Sent: 2")
+		ch <- 2
+	}()
+
+	// Receiving from a Buffered Channel
+	// - Now, since we have a buffered channel, the main goroutine will not block until the buffer
+	//   is full.
+	// - The goroutine will also not block until the buffer is full.
+	// - Output: Send: 1 | Send: 2 | Received: 1 | Received: 2
+
+	time.Sleep(time.Second)
+	x := <-ch
+	fmt.Println("Received:", x)
+	time.Sleep(time.Second)
+	x = <-ch
+	fmt.Println("Received:", x)
+}
+
+----------------------------------------------------------------------------------------------------
+- Notes
+----------------------------------------------------------------------------------------------------
+
+- Always follow this format, keep descriptions simple and direct.
+- Avoid using backtick characters (`) in comments; always prefer double quotes (") to document code. 
+  Ex: "chan<-", "func"...
+- Only include "- Output:" when the case actually logs an output (e.g., via fmt.Print).
+- Aim to keep lines under a maximum of 100 columns where possible.
+- Talk in portuguese Brazil (pt-br) during the conversation, however use only english (en-us) to
+  generate the files, comments and code examples.

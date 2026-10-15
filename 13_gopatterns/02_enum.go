@@ -3,7 +3,7 @@
 // We can define a custom type and use iota to create a set of related constants.
 // This is a common pattern in Go to create enumerated types.
 
-package patterns
+package gopatterns
 
 import "fmt"
 

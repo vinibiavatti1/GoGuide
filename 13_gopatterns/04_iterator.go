@@ -8,7 +8,7 @@
 // indicating to stop the iteration early.
 // See: https://go.dev/blog/range-functions
 
-package patterns
+package gopatterns
 
 import (
 	"iter"
