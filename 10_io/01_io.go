@@ -1,7 +1,7 @@
 // I/O (Input / Output)
-// In Go, I/O operations are centered around two core interfaces: io.Reader and io.Writer.
-// The "os" package provides platform-independent interfaces to operating system functionality,
-// while "bufio" implements buffered I/O to optimize reading and writing processes.
+// - In Go, I/O operations are centered around two core interfaces: io.Reader and io.Writer.
+// - The "os" package provides platform-independent interfaces to operating system functionality,
+// - while "bufio" implements buffered I/O to optimize reading and writing processes.
 
 package io
 
@@ -11,10 +11,15 @@ import (
 	"os"
 )
 
+//==================================================================================================
+// Handling Files/Directories
+//==================================================================================================
+
 // Creating Files
-// os.Create creates or truncates (empties) a file.
-// It returns a file pointer (*os.File) which acts as an io.ReadWriteCloser.
-// Always defer Close() right after a successful open/create to release resources.
+// - The "os.Create" function creates or truncates (empties) a file.
+// - It returns a file pointer (*os.File) which acts as an io.ReadWriteCloser.
+// - Always defer Close() right after a successful open/create to release resources.
+
 func CreatingFiles() {
 	file, err := os.Create("resources/example.txt")
 	if err != nil {
@@ -24,8 +29,9 @@ func CreatingFiles() {
 }
 
 // Creating Directories
-// os.Mkdir creates a single directory with the specified permissions.
-// The parent directory must already exist, or it will return an error.
+// - The "os.Mkdir" function creates a single directory with the specified permissions.
+// - The parent directory must already exist, or it will return an error.
+
 func CreatingDirectories() {
 	err := os.Mkdir("resources/data", 0755)
 	if err != nil {
@@ -34,8 +40,10 @@ func CreatingDirectories() {
 }
 
 // Creating Nested Directories
-// os.MkdirAll creates a directory along with any necessary parent directories (like mkdir -p).
-// If the path already exists, it does nothing and returns nil.
+// - The "os.MkdirAll" function creates a directory along with any necessary parent directories
+//   (like mkdir -p).
+// - If the path already exists, it does nothing and returns nil.
+
 func CreatingNestedDirectories() {
 	err := os.MkdirAll("resources/nested/deep/dir", 0755)
 	if err != nil {
@@ -44,7 +52,8 @@ func CreatingNestedDirectories() {
 }
 
 // Removing Files
-// os.Remove deletes a single file or an empty directory.
+// - The "os.Remove" function deletes a single file or an empty directory.
+
 func RemovingFiles() {
 	err := os.Remove("resources/example.txt")
 	if err != nil {
@@ -53,14 +62,14 @@ func RemovingFiles() {
 }
 
 // Removing Directories
-// os.Remove can delete a directory only if it is completely empty.
-// os.RemoveAll removes a path and any children it contains (like rm -rf).
+// - The "os.Remove" function can delete a directory only if it is completely empty.
+// - The "os.RemoveAll" function removes a path and any children it contains (like rm -rf).
+
 func RemovingDirectories() {
 	err := os.Remove("resources/data")
 	if err != nil {
 		fmt.Println("Error deleting empty directory:", err)
 	}
-
 	errAll := os.RemoveAll("resources/nested")
 	if errAll != nil {
 		fmt.Println("Error deleting directory tree:", errAll)
@@ -68,10 +77,11 @@ func RemovingDirectories() {
 }
 
 // Reading Files
-// os.ReadFile is the simplest way to read an entire file into memory at once.
-// It automatically handles opening and closing the file for you.
-// Idiomatic for small files where memory footprint is not a concern.
-// data is returned as []byte, so we cast it to string to display/use it.
+// - The "os.ReadFile" function is the simplest way to read an entire file into memory at once.
+// - It automatically handles opening and closing the file for you.
+// - Idiomatic for small files where memory footprint is not a concern.
+// - The data is returned as []byte, so we cast it to string to display/use it.
+
 func ReadingFiles() {
 	data, err := os.ReadFile("resources/example.txt")
 	if err != nil {
@@ -82,8 +92,9 @@ func ReadingFiles() {
 }
 
 // Writing Files
-// os.WriteFile writes data to a path. If the file doesn't exist, it creates it.
-// The 0644 parameter sets standard unix permissions (Read/Write for owner, Read-only for others).
+// - The "os.WriteFile" function writes data to a path. If the file doesn't exist, it creates it.
+// - The 0644 parameter sets standard unix permissions (Read/Write for owner, Read-only for others).
+
 func WritingFiles() {
 	content := "Hello, Go I/O World!"
 	err := os.WriteFile("resources/example.txt", []byte(content), 0644)
@@ -92,9 +103,16 @@ func WritingFiles() {
 	}
 }
 
+//==================================================================================================
+// Open
+//==================================================================================================
+
 // Opening Large Files
-// os.Open opens the file for reading without loading its entire content into memory.
-// bufio.NewScanner reads the file line-by-line, keeping RAM usage low and constant.
+// - The "os.Open" function opens the file for reading without loading its entire content into
+//   memory.
+// - The "bufio.NewScanner" function reads the file line-by-line, keeping RAM usage low and
+//   constant.
+
 func OpeningLargeFiles() {
 	file, err := os.Open("large_log.txt")
 	if err != nil {
@@ -110,9 +128,14 @@ func OpeningLargeFiles() {
 	}
 }
 
+//==================================================================================================
+// Temp Files
+//==================================================================================================
+
 // Creating Temp Files
-// os.CreateTemp creates a random, unique file in the specified directory.
-// Passing an empty string "" targets the default temporary directory of the OS.
+// - The "os.CreateTemp" function creates a random, unique file in the specified directory.
+// - Passing an empty string "" targets the default temporary directory of the OS.
+
 func CreatingTempFiles() {
 	tempFile, err := os.CreateTemp("", "example-*.txt")
 	if err != nil {
@@ -120,20 +143,19 @@ func CreatingTempFiles() {
 		return
 	}
 	defer tempFile.Close()
-
 	fmt.Println("Temp file created at:", tempFile.Name())
 }
 
 // Removing Temp Files
-// Temporary files are not auto-deleted by Go when closed; they must be removed from disk.
-// The idiomatic way is to defer os.Remove right after a successful creation.
+// - Temporary files are not auto-deleted by Go when closed; they must be removed from disk.
+// - The idiomatic way is to defer os.Remove right after a successful creation.
+
 func RemovingTempFiles() {
 	tempFile, err := os.CreateTemp("", "transient-*.txt")
 	if err != nil {
 		fmt.Println("Error creating temp file:", err)
 		return
 	}
-	// This ensures the file is wiped from the disk when the function scope ends
 	defer os.Remove(tempFile.Name())
 	defer tempFile.Close()
 }
