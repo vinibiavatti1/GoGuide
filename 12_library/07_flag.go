@@ -1,9 +1,10 @@
 // Flag
-// The flag package provides a simple way to define and parse command-line flags.
-// It is designed to be easy to use and understand, while still being powerful enough
-// for most use cases.
-// The package provides a Flag type that can be used to define flags, and a
-// Parse function that can be used to parse command-line arguments.
+// - The flag package provides a simple way to define and parse command-line flags.
+// - It is designed to be easy to use and understand, while still being powerful enough for most use
+//   cases.
+// - The package provides a Flag type that can be used to define flags, and a
+// - Parse function that can be used to parse command-line arguments.
+// - The lib supports "-h" or "--help" flag to render a generated help.
 
 package library
 
@@ -13,9 +14,10 @@ import (
 )
 
 // Declaring Flags
-// We can use the datatype functions to declare flags of the respective type.
-// These flags can be defined directly in the global scope or inside a function, as variables.
-// The statements below declare flags for -p1 -p2 -p3 -p4 -p5 -p6 -p7 -p8 command line parameters.
+// - We can use the datatype functions to declare flags of the respective type.
+// - These flags can be defined directly in the global scope or inside a function, as variables.
+// - The statements below declare flags for -p1 -p2 -p3 -p4 -p5 -p6 -p7 -p8 command line parameters.
+
 var (
 	p1Flag = flag.String("p1", "default1", "p1 description...")
 	p2Flag = flag.Int("p2", 0, "p2 description...")
@@ -28,18 +30,20 @@ var (
 )
 
 // Parsing Flags
-// After defining the flags, we need to call the flag.Parse() function to parse the command-line arguments.
-// This function should be called after all flags have been defined, but before any flags are accessed.
+// - After defining the flags, we need to call the flag.Parse() function to parse the command-line
+//   arguments.
+// - This function should be called after all flags have been defined, but before any flags are
+//   accessed.
+
 func init() {
 	flag.Parse()
 }
 
 // Accessing Flags
-// To access the values of the flags, we can use the variables defined above.
-// The variables are pointer variables, so we need to dereference them to get the actual values.
+// - To access the values of the flags, we can use the variables defined above.
+// - The variables are pointer variables, so we need to dereference them to get the actual values.
+
 func ProcessFlags() {
-	// Acessing Flags
-	// We will print all the flags to the console.
 	fmt.Println("p1:", *p1Flag)
 	fmt.Println("p2:", *p2Flag)
 	fmt.Println("p3:", *p3Flag)
@@ -51,19 +55,11 @@ func ProcessFlags() {
 }
 
 // Setting Flags in Command Line
-// To set the flags in the command line, the following syntaxs are allowed:
+// - To set the flags in the command line, the following syntaxs are allowed:
+
 var _ = `
  -flag
 --flag   // double dashes are also permitted
  -flag=x
  -flag x // non-boolean flags only
-`
-
-// Help Flag
-// We can use the -h or --help flag to get help on the flags.
-// This will print the usage information for the flags, including the default values and descriptions.
-// The help flag is automatically added to the flag set, so we don't need to define it ourselves.
-var _ = `
- -h
---help
 `
