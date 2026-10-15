@@ -1,133 +1,441 @@
-// Reflect
-// The reflect package implements run-time reflection, allowing a program to
-// inspect and manipulate objects with arbitrary types at runtime.
+// Slices
+// - The slices package provides a set of functions for manipulating slices.
+// - It includes functions for filtering, mapping, and reducing slices.
+// - It also includes functions for finding the minimum and maximum values in a slice.
 
 package library
 
 import (
+	"cmp"
 	"fmt"
-	"reflect"
+	"slices"
+	"strings"
 )
 
-// Reflection Core Functions
-// The primary entry points to inspect any variable in Go.
-func ReflectionCoreFunctions() {
-	// TypeOf
-	// TypeOf returns the reflect.Type that represents the dynamic type of the interface.
-	// Output: main.User
-	type User struct{ Name string }
-	u := User{Name: "Vini"}
-	t := reflect.TypeOf(u)
-	fmt.Println(t)
+//==================================================================================================
+// Element Functions
+//==================================================================================================
 
-	// ValueOf
-	// ValueOf returns a new Value initialized to the concrete value stored in the interface.
-	// Output: {Vini}
-	v := reflect.ValueOf(u)
-	fmt.Println(v)
-}
+func SliceElementFunctions() {
 
-// Reflect Type Methods
-// Methods available on a reflect.Type object to inspect metadata.
-func ReflectTypeMethods() {
-	// Kind
-	// Kind returns the specific underlying variety of a type (e.g., struct, int, slice).
-	// Output: struct
-	type User struct{ Name string }
-	t := reflect.TypeOf(User{})
-	fmt.Println(t.Kind())
+	// Insert
+	// - Insert inserts the values v... into s at index i, returning the modified slice.
+	// - Output: [A X Y B C] (X and Y are inserted at index 1)
 
-	// NumField
-	// NumField returns a struct type's field count. It panics if the type's Kind is not Struct.
-	// Output: 2
-	type Order struct {
-		ID    int
-		Total float64
-	}
-	t = reflect.TypeOf(Order{})
-	fmt.Println(t.NumField())
-
-	// Field
-	// Field returns the i'th field of a struct type. It panics if the index is out of bounds.
-	// Output: ID int
-	f := t.Field(0)
-	fmt.Println(f.Name, f.Type)
-
-	// FieldByName
-	// FieldByName returns the struct field with the given name and a boolean indicating if it was found.
-	// Output: Total true
-	f, found := t.FieldByName("Total")
-	fmt.Println(f.Name, found)
-}
-
-// Struct Tag Methods
-// Methods used to extract metadata tags defined in struct fields.
-func StructTagMethods() {
-	// Get
-	// Get returns the value associated with key in the tag string.
-	// Output: user_id
-	type Profile struct {
-		ID string `json:"user_id" db:"id"`
-	}
-	t := reflect.TypeOf(Profile{})
-	field := t.Field(0)
-	fmt.Println(field.Tag.Get("json"))
-
-	// Lookup
-	// Lookup returns the value associated with key in the tag string and whether it was found.
-	// Output: id true
-	val, ok := field.Tag.Lookup("db")
-	fmt.Println(val, ok)
-}
-
-// Reflect Value Methods
-// Methods available on a reflect.Value object to read or modify values.
-func ReflectValueMethods() {
-	// Interface
-	// Interface returns v's current value as an interface{}, packing it back into standard Go data.
-	// Output: 100
-	v := reflect.ValueOf(100)
-	i := v.Interface().(int) // Type assertion back to int
-	fmt.Println(i)
-
-	// Elem
-	// Elem returns the value that the interface v contains or that the pointer v points to.
-	// Essential when you need to modify a value via a pointer.
-	// Output: 200
-	x := 100
-	v = reflect.ValueOf(&x) // Passing pointer
-	v.Elem().SetInt(200)    // Modifying the underlying value
+	x := []string{"A", "B", "C"}
+	x = slices.Insert(x, 1, "X", "Y")
 	fmt.Println(x)
 
-	// IsNil
-	// IsNil reports whether its argument v is nil. v must be a chan, func, interface, map, pointer, or slice.
-	// Output: true
-	var s []string
-	v = reflect.ValueOf(s)
-	fmt.Println(v.IsNil())
+	// Concat
+	// - Concat returns a new slice concatenating the passed in slices.
+	// - Output: [A B C D E F]
 
-	// IsValid
-	// IsValid reports whether v represents a value. It returns false if v is the zero Value (like from a missing map key).
-	// Output: false
-	v = reflect.ValueOf(nil)
-	fmt.Println(v.IsValid())
+	x = []string{"A", "B", "C"}
+	x = slices.Concat(x, []string{"D", "E", "F"})
+	fmt.Println(x)
+
+	// Delete
+	// - Delete removes the elements s[i:j] from s, returning the modified slice
+	// - Output: [A D E] (B and C are removed)
+
+	x = []string{"A", "B", "C", "D", "E"}
+	x = slices.Delete(x, 1, 3)
+	fmt.Println(x)
+
+	// DeleteFunc
+	// - DeleteFunc works like Delete, but uses a custom comparison function.
+	// - Output: [A C] (B is removed)
+
+	x = []string{"A", "B", "C"}
+	x = slices.DeleteFunc(x, func(a string) bool {
+		return a == "B"
+	})
+	fmt.Println(x)
+
+	// Repeat
+	// - Repeat returns a new slice that repeats the provided slice the given number of times.
+	// - Output: [A B C A B C]
+
+	x = []string{"A", "B", "C"}
+	x = slices.Repeat(x, 2)
+	fmt.Println(x)
+
+	// Replace
+	// - Replace replaces the elements s[i:j] by the given v, and returns the modified slice.
+	// - Output: [A X X C]
+
+	x = []string{"A", "B", "C", "D"}
+	x = slices.Replace(x, 1, 3, "X")
+	fmt.Println(x)
+
+	// Compact
+	// - Compact replaces consecutive runs of equal elements with a single copy.
+	// - This is like the uniq command found on Unix.
+	// - Compact modifies the contents of the slice s and returns the modified slice, which may have
+	//   a smaller length.
+	// - Compact zeroes the elements between the new length and the original length.
+	// - Output: [A B C] (length is 3, capacity is 6)
+
+	x = []string{"A", "A", "B", "B", "C", "C"}
+	x = slices.Compact(x)
+	fmt.Println(x)
+
+	// CompactFunc
+	// - CompactFunc works like Compact, but uses a custom comparison function.
+	// - Output: [A b C] (length is 3, capacity is 6)
+
+	x = []string{"A", "a", "b", "B", "C", "c"}
+	x = slices.CompactFunc(x, strings.EqualFold)
+	fmt.Println(x)
+
+	// Reverse
+	// - Reverse reverses the elements of the slice in place.
+	// - Note: It modifies the original slice.
+	// - Output: [C B A] (slices are reversed)
+
+	x = []string{"A", "B", "C"}
+	slices.Reverse(x)
+	fmt.Println(x)
+
+	// AppendSeq
+	// - AppendSeq appends the values from seq to the slice and returns the extended slice.
+	// - Output: [A B C A B C]
+
+	x = []string{"A", "B", "C"}
+	x = slices.AppendSeq(x, slices.Values(x))
+	fmt.Println(x)
+
+	// Clone
+	// - Clone returns a copy of the slice. The elements are copied using assignment, so this is a
+	//   shallow clone.
+	// - The result may have additional unused capacity.
+	// - Output: [A B C]
+
+	x = []string{"A", "B", "C"}
+	clone := slices.Clone(x)
+	fmt.Println(clone)
 }
 
-// Reflection Utility Functions
-// Global functions inside the reflect package for comparison and deep operations.
-func ReflectionUtilityFunctions() {
-	// DeepEqual
-	// DeepEqual reports whether x and y are "deeply equal", working natively on slices, maps, and nested structs.
-	// Output: true
-	m1 := map[string]int{"A": 1}
-	m2 := map[string]int{"A": 1}
-	fmt.Println(reflect.DeepEqual(m1, m2))
+//==================================================================================================
+// Index Functions
+//==================================================================================================
 
-	// Copy
-	// Copy copies elements from a source slice to a destination slice using reflection Values.
-	// Output: 2 (elements copied) -> [1 2]
-	src := reflect.ValueOf([]int{1, 2, 3})
-	dst := reflect.ValueOf(make([]int, 2))
-	copied := reflect.Copy(dst, src)
-	fmt.Println(copied, dst.Interface())
+func SliceIndexFunctions() {
+
+	// Index
+	// - Index returns the index of the first occurrence of v in s, or -1 if not present.
+	// - Output: 1 (B is at index 1)
+
+	x := []string{"A", "B", "C"}
+	i := slices.Index(x, "B")
+	fmt.Println(i)
+
+	// IndexFunc
+	// - IndexFunc returns the first index i satisfying f(s[i]), or -1 if none do.
+	// - Output: 1 (B is at index 1)
+
+	x = []string{"A", "b", "C"}
+	i = slices.IndexFunc(x, func(a string) bool {
+		return strings.ToUpper(a) == "B"
+	})
+	fmt.Println(i)
+}
+
+//==================================================================================================
+// Search Functions
+//==================================================================================================
+
+func SliceSearchFunctions() {
+
+	// Binary Seach
+	// - BinarySearch searches for target in a sorted slice and returns the earliest position where
+	//   target is found, or the position where target would appear in the sort order.
+	// - It also returns a bool saying whether the target is really found in the slice.
+	// - The slice must be sorted in increasing order.
+	// - Output: 1 true
+
+	x := []string{"A", "B", "C"}
+	i, found := slices.BinarySearch(x, "B")
+	fmt.Println(i, found)
+
+	// Binary Search Func
+	// - BinarySearchFunc works like BinarySearch, but uses a custom comparison function.
+	// - The comparison function must return a comparison result: (-1, 0 or 1).
+	// - Output: 1 true
+
+	type Person struct {
+		ID   int
+		Name string
+	}
+	y := []*Person{
+		{ID: 1, Name: "John"},
+		{ID: 2, Name: "Maria"},
+	}
+	i, found = slices.BinarySearchFunc(y, &Person{Name: "Maria"}, func(a *Person, b *Person) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
+	fmt.Println(i, found)
+
+	// Contains
+	// - Contains reports whether v is present in s.
+	// - Output: true (B is present)
+
+	x = []string{"A", "B", "C"}
+	has := slices.Contains(x, "B")
+	fmt.Println(has)
+
+	// ContainsFunc
+	// - ContainsFunc works like Contains, but uses a custom comparison function.
+	// - Output: true (B is present)
+
+	x = []string{"A", "B", "C"}
+	has = slices.ContainsFunc(x, func(a string) bool {
+		return a == "B"
+	})
+	fmt.Println(has)
+
+	// Max
+	// - Max returns the maximal value in x.
+	// - Output: 53 (maximal value is 53)
+
+	z := []int{29, 53, 42}
+	max := slices.Max(z)
+	fmt.Println(max)
+
+	// MaxFunc
+	// - MaxFunc works like Max, but uses a custom comparison function.
+	// - Output: 53 (maximal value is 53)
+
+	z = []int{29, 53, 42}
+	max = slices.MaxFunc(z, func(a int, b int) int {
+		return a - b
+	})
+	fmt.Println(max)
+
+	// Min
+	// - Min returns the minimal value in x.
+	// - Output: 29 (minimal value is 29)
+
+	min := slices.Min(z)
+	fmt.Println(min)
+
+	// MinFunc
+	// - MinFunc works like Min, but uses a custom comparison function.
+	// - Output: 29 (minimal value is 29)
+
+	min = slices.MinFunc(z, func(a int, b int) int {
+		return a - b
+	})
+	fmt.Println(min)
+}
+
+//==================================================================================================
+// Compare Functions
+//==================================================================================================
+
+func SliceCompareFunctions() {
+
+	// Compare
+	// - Compare compares the elements of s1 and s2, using cmp.Compare on each pair of elements.
+	// - Output: 0 (equal)
+
+	x := []string{"A", "B", "C"}
+	cmp := slices.Compare(x, []string{"A", "B", "C"})
+	fmt.Println(cmp)
+
+	// CompareFunc
+	// - CompareFunc works like Compare, but uses a custom comparison function.
+	// - Output: 0 (equal)
+
+	x = []string{"A", "B", "C"}
+	cmp = slices.CompareFunc(x, []string{"a", "b", "c"}, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(cmp)
+
+	// Equal
+	// - Equal reports whether two slices are equal.
+	// - Output: true (slices are equal)
+
+	x = []string{"A", "B", "C"}
+	eq := slices.Equal(x, []string{"A", "B", "C"})
+	fmt.Println(eq)
+
+	// EqualFunc
+	// - EqualFunc works like Equal, but uses a custom comparison function.
+	// - Output: true (slices are equal)
+
+	x = []string{"A", "B", "C"}
+	eq = slices.EqualFunc(x, []string{"a", "b", "c"}, strings.EqualFold)
+	fmt.Println(eq)
+}
+
+//==================================================================================================
+// Sort Functions
+//==================================================================================================
+
+func SliceSortFunctions() {
+
+	// Sort
+	// - Sort sorts a slice of any ordered type in ascending order.
+	// - Note: It modifies the original slice.
+	// - Output: [A B C] (slices are sorted)
+
+	x := []string{"C", "A", "B"}
+	slices.Sort(x)
+	fmt.Println(x)
+
+	// SortFunc
+	// - SortFunc sorts a slice of any type using the provided comparison function.
+	// - Note: It modifies the original slice.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	slices.SortFunc(x, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(x)
+
+	// SortStableFunc
+	// - SortStableFunc sorts the slice x while keeping the original order of equal elements, using
+	//   cmp to compare elements in the same way as SortFunc.
+	// - Note: It modifies the original slice.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	slices.SortStableFunc(x, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(x)
+
+	// Sorted
+	// - Sorted collects values from seq into a new slice, sorts the slice, and returns it.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	sorted := slices.Sorted(slices.Values(x))
+	fmt.Println(sorted)
+
+	// SortedFunc
+	// - SortedFunc collects values from seq into a new slice, sorts the slice using the comparison
+	//   function, and returns it.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	sorted = slices.SortedFunc(slices.Values(x), func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(sorted)
+
+	// SortedStableFunc
+	// - SortedStableFunc collects values from seq into a new slice.
+	// - It then sorts the slice while keeping the original order of equal elements, using the
+	//   comparison function to compare elements.
+	// - Output: [A b C] (slices are sorted)
+
+	x = []string{"C", "A", "b"}
+	sorted = slices.SortedStableFunc(slices.Values(x), func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(sorted)
+
+	// IsSorted
+	// - IsSorted reports whether x is sorted in ascending order.
+	// - Output: true (slices are sorted)
+
+	x = []string{"A", "B", "C"}
+	is := slices.IsSorted(x)
+	fmt.Println(is)
+
+	// IsSortedFunc
+	// - IsSortedFunc works like IsSorted, but uses a custom comparison function.
+	// - Output: true (slices are sorted)
+
+	x = []string{"A", "b", "C", "d"}
+	is = slices.IsSortedFunc(x, func(a string, b string) int {
+		return strings.Compare(strings.ToUpper(a), strings.ToUpper(b))
+	})
+	fmt.Println(is)
+}
+
+//==================================================================================================
+// Seq Functions
+//==================================================================================================
+
+func SliceSeqFunctions() {
+
+	// All (slice -> Seq2)
+	// - All returns an iterator over index-value pairs in the slice in the usual order.
+	// - Output: 0 A, 1 B, 2 C
+
+	x := []string{"A", "B", "C"}
+	for i, v := range slices.All(x) {
+		fmt.Println(i, v)
+	}
+
+	// Values (slice -> Seq)
+	// - Values returns an iterator that yields the slice elements in order.
+	// - Output: A B C
+
+	x = []string{"A", "B", "C"}
+	for v := range slices.Values(x) {
+		fmt.Println(v)
+	}
+
+	// Collect (Seq -> slice)
+	// - Collect collects values from seq into a new slice and returns it.
+	// - Output: [A B C]
+
+	x = []string{"A", "B", "C"}
+	y := slices.Collect(slices.Values(x))
+	fmt.Println(y)
+}
+
+//==================================================================================================
+// Other Functions
+//==================================================================================================
+
+func SlicesOtherFunctions() {
+
+	// Backward
+	// - Backward returns an iterator over index-value pairs in the slice, traversing it backward
+	//   with descending indices.
+	// - Output: 2 C, 1 B, 0 A
+
+	x := []string{"A", "B", "C"}
+	for i, v := range slices.Backward(x) {
+		fmt.Println(i, v)
+	}
+
+	// Chunk
+	// - Chunk returns an iterator over consecutive sub-slices of up to n elements of s.
+	// - All but the last sub-slice will have size n. All sub-slices are clipped to have no capacity
+	//   beyond the length.
+	// - If s is empty, the sequence is empty: there is no empty slice in the sequence. Chunk panics
+	//   if n is less than 1.
+	// - Output: [A B], [C D], [E]
+
+	x = []string{"A", "B", "C", "D", "E"}
+	chunk := slices.Chunk(x, 2)
+	for v := range chunk {
+		fmt.Println(v)
+	}
+
+	// Clip
+	// - Clip removes unused capacity from the slice, returning s[:len(s):len(s)].
+	// - Output: 3 (capacity is 3)
+
+	x = make([]string, 0, 10) // (capacity is 10)
+	x = append(x, "A", "B", "C")
+	x = slices.Clip(x)
+	fmt.Println(cap(x))
+
+	// Grow
+	// - Grow increases the slice's capacity, if necessary, to guarantee space for another n
+	//   elements.
+	// - Output: 5 (capacity is 5)
+
+	x = []string{"A", "B", "C"}
+	x = slices.Grow(x, 2)
+	fmt.Println(cap(x))
 }

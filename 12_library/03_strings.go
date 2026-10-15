@@ -14,7 +14,7 @@ import (
 // Compare Functions
 //==================================================================================================
 
-func CompareFunctions() {
+func StringCompareFunctions() {
 
 	// Compare
 	// - Compare compares two strings lexicographically.
@@ -38,7 +38,7 @@ func CompareFunctions() {
 // Contains Functions
 //==================================================================================================
 
-func ContainsFunctions() {
+func StringContainsFunctions() {
 
 	// Contains
 	// - Contains reports whether substr is within s.
@@ -91,7 +91,7 @@ func ContainsFunctions() {
 // Index Functions
 //==================================================================================================
 
-func IndexFunctions() {
+func StringIndexFunctions() {
 
 	// Index
 	// - Index returns the index of the first instance of substr in s, or -1 if substr is not
@@ -171,7 +171,7 @@ func IndexFunctions() {
 // Replace Functions
 //==================================================================================================
 
-func ReplaceFunctions() {
+func StringReplaceFunctions() {
 
 	// Replace
 	// - Replace returns a copy of the string s with the first n non-overlapping instances of old
@@ -196,7 +196,7 @@ func ReplaceFunctions() {
 // Cut Functions
 //==================================================================================================
 
-func CutFunctions() {
+func StringCutFunctions() {
 
 	// Cut
 	// - Cut slices s into two parts: the text before the first instance of sep and the text after.
@@ -228,7 +228,7 @@ func CutFunctions() {
 // Split Functions
 //==================================================================================================
 
-func SplitFunctions() {
+func StringSplitFunctions() {
 
 	// Split
 	// - Split slices s into all substrings separated by sep and returns a slice of the substrings
@@ -291,7 +291,7 @@ func SplitFunctions() {
 // Fields Functions
 //==================================================================================================
 
-func FieldsFunctions() {
+func StringFieldsFunctions() {
 
 	// Fields
 	// - Fields splits s around each instance of one or more consecutive white space characters.
@@ -337,7 +337,7 @@ func FieldsFunctions() {
 // Case Functions
 //==================================================================================================
 
-func CaseFunctions() {
+func StringCaseFunctions() {
 
 	// ToLower
 	// - ToLower returns a copy of the string s with all Unicode code points mapped to their lower
@@ -392,7 +392,7 @@ func CaseFunctions() {
 // Trim Functions
 //==================================================================================================
 
-func TrimFunctions() {
+func StringTrimFunctions() {
 
 	// Trim
 	// - Trim returns a string with all leading and trailing Unicode code points contained in cutset
@@ -472,7 +472,7 @@ func TrimFunctions() {
 // Other Functions
 //==================================================================================================
 
-func OtherFunctions() {
+func StringOtherFunctions() {
 
 	// Clone
 	// - Clone is used to create a copy of a string.
