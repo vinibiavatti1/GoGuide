@@ -1,6 +1,6 @@
 // TCP/IP (Transmission Control Protocol/Internet Protocol) Sockets
-// This file demonstrates streaming connection-oriented TCP socket communication in Go.
-// TCP Sockets guarantee reliable, ordered, and error-checked delivery of a stream of bytes.
+// - This file demonstrates streaming connection-oriented TCP socket communication in Go.
+// - TCP Sockets guarantee reliable, ordered, and error-checked delivery of a stream of bytes.
 
 package net
 
@@ -11,8 +11,10 @@ import (
 	"time"
 )
 
+//==================================================================================================
 // Server
-// Demonstrates a structured TCP server listening on port 8083, accepting connections, and parsing text via bufio.
+//==================================================================================================
+
 func StartTCPServer() {
 	listener, err := net.Listen("tcp", ":8083")
 	if err != nil {
@@ -43,8 +45,10 @@ func StartTCPServer() {
 	}
 }
 
+//==================================================================================================
 // Client
-// Demonstrates a TCP client connecting to localhost, pushing a message string, and reading the synchronous server feedback.
+//==================================================================================================
+
 func StartTCPClient() {
 	conn, err := net.Dial("tcp", "localhost:8083")
 	if err != nil {
@@ -67,8 +71,10 @@ func StartTCPClient() {
 	fmt.Print("Client received: ", response)
 }
 
-// TestTCP
-// Orchestrates the client-server interaction over streaming TCP sockets.
+//==================================================================================================
+// Test
+//==================================================================================================
+
 func TestTCP() {
 	go StartTCPServer()
 	time.Sleep(500 * time.Millisecond) // Ensures server socket bound completely
