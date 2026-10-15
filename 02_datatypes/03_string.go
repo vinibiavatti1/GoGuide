@@ -71,10 +71,10 @@ func DeclaringStrings() {
 }
 
 //==================================================================================================
-// Manipulating Strings
+// String Operations
 //==================================================================================================
 
-func ManipulatingStrings() {
+func StringOperations() {
 	x := "Hello, World!"
 
 	// Retrieving String Length

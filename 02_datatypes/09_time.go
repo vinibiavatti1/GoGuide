@@ -44,7 +44,7 @@ func FormattingAndParsingTime() {
 
 	// Formatting Time (Converting Time to String)
 	// - Go does NOT use traditional yyyy-MM-dd layout tokens, instead, it uses a specific reference
-	//   time: "Mon Jan 2 15:04:05 MST 2006" (Easy to remember as: 1 2 3 4 5 6 7)
+	//   time: "Mon Jan 2 15:04:05 MST 2006" (Easy to remember as: 1 2 3 4 5 6 7).
 	// - We use the ".Format()" method passing our desired layout using the reference values.
 	// - Output: 2026-07-17
 	fmt.Println(t.Format("2006-01-02"))
@@ -71,7 +71,7 @@ func TimeOperations() {
 	fmt.Println("Tomorrow:", tomorrow)
 
 	// Adding Years, Months and Days
-	// - For calendar-based additions, use ".AddDate(years, months, days)"
+	// - For calendar-based additions, use ".AddDate(years, months, days)".
 	// - Output: 2026-08-17 13:30:00 +0000 UTC
 	nextMonth := t.AddDate(0, 1, 0)
 	fmt.Println("Next Month:", nextMonth)
