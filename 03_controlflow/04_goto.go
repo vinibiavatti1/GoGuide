@@ -1,7 +1,8 @@
 // Goto
 // - The "goto" statement allows jumping to a labeled statement within the same function.
-// - It is generally discouraged in favor of structured control flow (loops, conditionals, etc.).
-// - However, it can be useful for breaking out of deeply nested structures.
+// - It is generally discouraged in high-level logic in favor of structured control flow (loops,
+//   conditionals, etc.). However, it is sometimes used in low-level code patterns, such as
+//   centralized error/cleanup handling (cleanup routines) within a function before returning.
 // - Syntax:
 //   - goto <label>
 //   - <label>:
