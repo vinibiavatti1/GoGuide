@@ -48,16 +48,12 @@ var _ <-chan int
 // Declaring Goroutines
 //==================================================================================================
 
-// Declaring a Goroutine
-// - A goroutine is a lightweight thread managed by the Go runtime.
-// - It is used to run functions concurrently.
-// - The "go" keyword followed by a function call starts a new goroutine.
-
 func StartGoroutines() {
 
-	// Start a Goroutine
-	// - This will run the print function concurrently.
-	// - Output: Hello
+	// Declaring a Goroutine
+	// - A goroutine is a lightweight thread managed by the Go runtime.
+	// - It is used to run functions concurrently.
+	// - The "go" keyword followed by a function call starts a new goroutine.
 
 	go fmt.Println("Hello")
 
@@ -72,18 +68,15 @@ func StartGoroutines() {
 }
 
 //==================================================================================================
-// Communicating With Channels
+// Channels
 //==================================================================================================
 
-// Communicating with Channels
-// - Channels are used to communicate between goroutines.
-// - They can be thought of as pipes that connect goroutines.
-
-func CommunicatingWithChannels() {
+func Channels() {
 
 	// Declaring a Channel
-	// - We will declare a channel to be used for communication.
-	// - We can use the "make" function to create a channel.
+	// - Channels are used to communicate between goroutines.
+	// - They can be thought of as pipes that connect goroutines.
+	// - To declare a channel, the "make" function is used.
 
 	ch := make(chan int)
 
@@ -104,19 +97,21 @@ func CommunicatingWithChannels() {
 }
 
 //==================================================================================================
-// Using Multiple Channels
+// Multiple Channels
 //==================================================================================================
 
-// Using Multiple Channels (Select)
-// - The select statement is used to wait on multiple channel operations.
-// - It can also be used to avoid thread blocking when waiting for a channel to be ready.
-// - It is similar to a switch statement, but for channels.
+func MultipleChannels() {
 
-func UsingMultipleChannels() {
+	// Declaring Multiple Channels
+	// - The select statement is used to wait on multiple channel operations.
+	// - It can also be used to avoid thread blocking when waiting for a channel to be ready.
+	// - It is similar to a switch statement, but for channels.
+	// - Below there are two channels that will be processed.
+
 	ch1 := make(chan int)
 	ch2 := make(chan int)
 
-	// Start Goroutines with Channels
+	// Defining a Goroutine
 	// - Note that the goroutines will send values to the channels.
 
 	go func() {
@@ -143,13 +138,15 @@ func UsingMultipleChannels() {
 // Skip Channel Waiting
 //==================================================================================================
 
-// Skip Channel Waiting
-// - We can use the "select" statement to skip waiting for a channel to be ready.
-
 func SkipChannelWaiting() {
+
+	// Skip Channel Waiting
+	// - We can use the "select" statement to skip waiting for a channel to be ready.
+	// - We will create a channel below that will be skipped.
+
 	ch := make(chan int)
 
-	// Start a Goroutine with a Channel
+	// Defining a Goroutine
 	// - We will sleep for 1 second before sending a value to the channel.
 
 	go func() {
@@ -178,14 +175,17 @@ func SkipChannelWaiting() {
 // Unbuffered Channels
 //==================================================================================================
 
-// Unbuffered Channels
-// - Unbuffered channels are used for synchronous communication between goroutines.
-// - They block the sending goroutine until the receiving goroutine is ready to receive the value.
-
 func UnbufferedChannels() {
+
+	// Unbuffered Channels
+	// - Unbuffered channels are used for synchronous communication between goroutines.
+	// - They block the sending goroutine until the receiving goroutine is ready to receive the
+	//   value.
+	// - The channel below has no buffer size set (the second argument wansn't specified).
+
 	ch := make(chan int)
 
-	// Start a Goroutine with a Channel
+	// Defining a Goroutine
 	// - Note that two values are sent to the channel.
 
 	go func() {
@@ -213,19 +213,17 @@ func UnbufferedChannels() {
 // Buffered Channels
 //==================================================================================================
 
-// Buffered Channels
-// - Buffered channels are used for asynchronous communication between goroutines.
-// - They allow sending and receiving values without blocking the sending goroutine until the buffer
-//   is full.
-
 func BufferedChannels() {
 
-	// Declaring a Buffered Channel
+	// Buffered Channels
+	// - Buffered channels are used for asynchronous communication between goroutines.
+	// - They allow sending and receiving values without blocking the sending goroutine until the
+	//   buffer is full.
 	// - To create a buffered channel, we can use the "make" function with a buffer size.
 
 	ch := make(chan int, 2)
 
-	// Start a Goroutine with a Buffered Channel
+	// Defining a Goroutine
 	// - Note that two values are sent to the channel.
 
 	go func() {
@@ -247,4 +245,49 @@ func BufferedChannels() {
 	time.Sleep(time.Second)
 	x = <-ch
 	fmt.Println("Received:", x)
+}
+
+//==================================================================================================
+// Closing Channels
+//==================================================================================================
+
+func ClosingChannels() {
+
+	// Closing Channels
+	// - Channels can be closed using the "close" function to signal that no more values will be
+	//   sent.
+	// - Rule: The sender (the goroutine writing to the channel) is responsible for closing it.
+	// - Never close a channel from a receiver or from multiple concurrent goroutines.
+	// - Trying to send to a closed channel will cause a panic ("send on closed channel").
+
+	ch := make(chan int)
+
+	// Defining a Goroutine
+	// - Remember, the producer is responsible for closing the channel.
+	// - After sending the value, we close the channel to notify readers.
+
+	go func() {
+		fmt.Println("Sent: 1")
+		ch <- 1
+		close(ch) // <- Close
+	}()
+
+	// Receiving from a Closed Channel (With Pending Value)
+	// - Even though the channel is closed, we can still read any values that were sent before the
+	//   close.
+	// - The second return value ("ok") indicates whether the channel is open (true) or closed and
+	//   empty (false).
+	// - Output: Received: 1 Ok: true
+
+	x, ok := <-ch
+	fmt.Println("Received:", x, "Ok:", ok)
+	time.Sleep(time.Second)
+
+	// Receiving from a Closed Channel (Empty Channel)
+	// - Reading from a closed and empty channel does not block.
+	// - It immediately returns the zero value of the channel's type (0 for int) and "ok" as false.
+	// - Output: Received: 0 Ok: false
+
+	x, ok = <-ch
+	fmt.Println("Received:", x, "Ok:", ok)
 }
