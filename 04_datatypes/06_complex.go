@@ -120,4 +120,10 @@ func ComplexNumbersConversion() {
 	var x2 complex128 = complex(1, 2)
 	var y2 complex64 = complex64(x2)
 	fmt.Println("complex128:", x2, "complex64:", y2)
+
+	// String
+	// - Convert to string using the "fmt" package.
+	// - Output: (1+2i)
+	s1 := fmt.Sprint(1 + 2i)
+	fmt.Println(s1)
 }

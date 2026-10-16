@@ -162,4 +162,10 @@ func IntegerConversions() {
 	var x4 uint8 = 255
 	var y4 int8 = int8(x4)
 	fmt.Println("uint8:", x4, "int8:", y4)
+
+	// String
+	// - Convert to string using the "fmt" package.
+	// - Output: 128
+	str := fmt.Sprint(128)
+	fmt.Println(str)
 }

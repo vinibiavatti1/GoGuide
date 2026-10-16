@@ -121,4 +121,16 @@ func FloatConversion() {
 	var x4 int = 5
 	var y4 float64 = float64(x4)
 	fmt.Println("int:", x4, "float64:", y4)
+
+	// String
+	// - Convert to string using the "fmt" package.
+	// - Output: 3.14
+	s1 := fmt.Sprint(3.14)
+	fmt.Println(s1)
+
+	// Formatted String
+	// - We can convert a float specifying precision using format verbs like "%.2f".
+	// - Output: 3.14
+	s2 := fmt.Sprintf("%.2f", 3.1415)
+	fmt.Println(s2)
 }

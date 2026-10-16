@@ -9,10 +9,16 @@ import "fmt"
 func DeclaringBooleans() {
 
 	// Creating Booleans
-	// Booleans can have the values: true or false.
-	// Output: Boolean values: true false
+	// - Booleans can have the values: true or false.
+	// - Output: Boolean values: true false
 
 	x := true
 	y := false
 	fmt.Println("Boolean values:", x, y)
+
+	// String
+	// - Convert to string using the "fmt" package.
+	// - Output: true
+	str := fmt.Sprint(true)
+	fmt.Println(str)
 }
