@@ -101,15 +101,40 @@ func ForLoops() {
 }
 
 //==================================================================================================
-// Continue & Break
+// Break & Continue
 //==================================================================================================
 
-func ContinueAndBreak() {
+func BreakAndContinue() {
+
+	// Break
+	// - The "break" keyword is used to exit the loop entirely, even if the condition hasn't been
+	//   fully met.
+	// - Output: 0
+
+	for i := range 3 {
+		if i == 1 {
+			break
+		}
+		fmt.Println(i)
+	}
+
+	// Break With Label
+	// - Breaks out of an outer nested loop using a target label.
+	// - Output: 0 0 | 0 1 | 0 2
+
+outer1:
+	for i := range 100 {
+		for j := range 100 {
+			if j == 3 {
+				break outer1
+			}
+			fmt.Println(i, j)
+		}
+	}
 
 	// Continue
 	// - The "continue" keyword is used to skip the current iteration of the loop and jump to the
 	//   next iteration.
-	// - In this example, we skip the iteration when i is equal to 0.
 	// - Output: 0 | 2
 
 	for i := range 3 {
@@ -119,17 +144,18 @@ func ContinueAndBreak() {
 		fmt.Println(i)
 	}
 
-	// Break
-	// - The "break" keyword is used to exit the loop entirely, even if the condition hasn't been
-	//   fully met.
-	// - In this example, we break the loop when i is equal to 1.
-	// - Output: 0
+	// Continue With Label
+	// - Skips the current iteration of an outer nested loop using a target label.
+	// - Output: 0 0 | 1 0 | 2 0
 
+outer2:
 	for i := range 3 {
-		if i == 1 {
-			break
+		for j := range 3 {
+			if j == 1 {
+				continue outer2
+			}
+			fmt.Println(i, j)
 		}
-		fmt.Println(i)
 	}
 }
 

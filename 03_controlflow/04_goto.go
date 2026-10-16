@@ -54,15 +54,17 @@ err:
 
 // Breaking Out of Loops
 // - Goto can be used to break out of loops.
-// - It is useful for breaking out of deeply nested loops for example.
+// - It is useful for breaking out of deeply nested loops.
 // - Output: 0 | 1 | 2 | Exited nested loops
 
 func BreakingOutLoops() {
 	for i := range 10 {
-		if i == 3 {
-			goto exit
+		for j := range 10 {
+			if j == 3 {
+				goto exit
+			}
+			fmt.Println(i)
 		}
-		fmt.Println(i)
 	}
 exit:
 	fmt.Println("Exited nested loops")
