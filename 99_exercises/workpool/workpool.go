@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"math/rand/v2"
 	"time"
@@ -21,11 +22,6 @@ func ProcessTask(task *Task) error {
 	return nil
 }
 
-type Context struct {
-	Cancelled bool
-	Timeout   int
-}
-
 type Worker struct {
 	ID        int
 	RequestCh chan *Task
@@ -33,11 +29,19 @@ type Worker struct {
 	Running   bool
 }
 
-func (w *Worker) Run(ctx *Context) {
+func (w *Worker) Run(ctx context.Context) {
 	w.Running = true
 	for {
 		select {
-		case task := <-w.RequestCh:
+		case <-ctx.Done():
+			fmt.Println("Cancellation Requested for worker:", w.ID)
+			w.Running = false
+			return
+		case task, ok := <-w.RequestCh:
+			if !ok {
+				fmt.Printf("Channel closed for worker %d\n", w.ID)
+				return
+			}
 			fmt.Printf("Worker %d processing task...\n", w.ID)
 			err := ProcessTask(task)
 			if err != nil {
@@ -46,13 +50,14 @@ func (w *Worker) Run(ctx *Context) {
 			} else {
 				task.Status = "success"
 			}
-			if !ctx.Cancelled {
-				w.ResultCh <- task
-			} else {
+			select {
+			case w.ResultCh <- task:
+			case <-ctx.Done():
 				fmt.Println("Cancellation Requested for worker:", w.ID)
 				w.Running = false
 				return
 			}
+
 			fmt.Printf("Worker %d done\n", w.ID)
 		default:
 			time.Sleep(time.Second)
@@ -65,11 +70,9 @@ func main() {
 	workerPool := []*Worker{}
 
 	requestCh := make(chan *Task, 100)
-	resultCh := make(chan *Task)
+	resultCh := make(chan *Task, 100)
 
-	ctx := &Context{
-		Cancelled: false,
-	}
+	ctx, cancel := context.WithCancel(context.Background())
 
 	for i := range workerCount {
 		worker := &Worker{
@@ -99,13 +102,15 @@ func main() {
 		}
 	}
 
-	ctx.Cancelled = true
-	time.Sleep(5 * time.Second)
+	cancel()
+
+	time.Sleep(2 * time.Second)
 
 	close(requestCh)
 	close(resultCh)
 
 	time.Sleep(2 * time.Second)
+
 	for _, worker := range workerPool {
 		if worker.Running == true {
 			panic("Worker shouldn't be running")
