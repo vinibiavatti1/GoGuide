@@ -1,17 +1,20 @@
 // State
-// The State pattern allows an object to change its behavior when its internal state changes.
-// The object will appear to change its class.
-// This pattern is useful when you want to avoid using large conditional statements to manage state transitions.
-// It allows you to encapsulate state-specific behavior in separate classes, making the code more maintainable
-// and easier to understand.
+// - The State pattern allows an object to change its behavior when its internal state changes.
+// - The object will appear to change its class.
+// - This pattern is useful when you want to avoid using large conditional statements to manage
+//   state transitions.
+// - It allows you to encapsulate state-specific behavior in separate classes, making the code more
+//   maintainable and easier to understand.
 
 package behavioral
 
 import "fmt"
 
 // State
-// The State interface defines the methods that will be implemented by the concrete states.
-// In this case, it is the Edit, Publish, and Unpublish methods that will be called when the post changes state.
+// - The State interface defines the methods that will be implemented by the concrete states.
+// - In this case, it is the Edit, Publish, and Unpublish methods that will be called when the post
+//   changes state.
+
 type PostState interface {
 	Edit(content string)
 	Publish()
@@ -19,15 +22,17 @@ type PostState interface {
 }
 
 // Context
-// The Post struct is the context that will change its state based on the current state.
-// It contains a reference to the current state and the content of the post.
+// - The Post struct is the context that will change its state based on the current state.
+// - It contains a reference to the current state and the content of the post.
+
 type Post struct {
 	State   PostState
 	Content string
 }
 
 // Constructor
-// The NewPost function creates a new post and sets its initial state to DraftState.
+// - The NewPost function creates a new post and sets its initial state to DraftState.
+
 func NewPost() *Post {
 	post := &Post{}
 	post.State = &DraftState{Post: post}
@@ -35,9 +40,10 @@ func NewPost() *Post {
 }
 
 // Context Implementation
-// The Post struct has methods to change its state and edit its content.
-// The Edit method calls the Edit method of the current state, and the Publish and Unpublish methods
-// call the corresponding methods of the current state.
+// - The Post struct has methods to change its state and edit its content.
+// - The Edit method calls the Edit method of the current state, and the Publish and Unpublish
+//   methods call the corresponding methods of the current state.
+
 func (p *Post) Edit(content string) {
 	p.State.Edit(content)
 }
@@ -49,16 +55,19 @@ func (p *Post) Unpublish() {
 }
 
 // Concrete States
-// The DraftState and PublishedState structs are concrete implementations of the PostState interface.
-// They define the behavior of the post when it is in the draft or published state, respectively.
+// - The DraftState and PublishedState structs are concrete implementations of the PostState
+//   interface.
+// - They define the behavior of the post when it is in the draft or published state, respectively.
+
 type (
 	DraftState     struct{ Post *Post }
 	PublishedState struct{ Post *Post }
 )
 
 // Draft State Implementation
-// The DraftState struct implements the PostState interface and defines the behavior of the post when it
-// is in the draft state.
+// - The DraftState struct implements the PostState interface and defines the behavior of the post
+//   when it is in the draft state.
+
 func (p *DraftState) Edit(content string) {
 	p.Post.Content = content
 	fmt.Println("Post edited")
@@ -72,8 +81,9 @@ func (p *DraftState) Unpublish() {
 }
 
 // Published State Implementation
-// The PublishedState struct implements the PostState interface and defines the behavior of the post when it
-// is in the published state.
+// - The PublishedState struct implements the PostState interface and defines the behavior of the
+//   post when it is in the published state.
+
 func (p *PublishedState) Edit(content string) {
 	fmt.Println("Cannot edit a published post")
 }
@@ -86,7 +96,9 @@ func (p *PublishedState) Unpublish() {
 }
 
 // Test State
-// The test function will create a post and change its state from draft to published and back to draft.
+// - The test function will create a post and change its state from draft to published and back to
+//   draft.
+
 func TestState() {
 	post := NewPost()                          // Output:
 	post.Edit("Hello, World!")                 // Post edited

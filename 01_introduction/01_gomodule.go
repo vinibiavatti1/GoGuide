@@ -1,4 +1,4 @@
-// Module
+// Go Module
 // - A Go module is a collection of Go packages stored in a single directory tree.
 // - A module is defined by a go.mod file that defines the module's path and its dependencies.
 // - An application can have multiple modules.
