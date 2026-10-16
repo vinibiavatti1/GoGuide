@@ -4,60 +4,63 @@
 // - Pointers are declared using the `*` operator, and you can obtain a pointer to a variable using
 //   the `&` operator.
 // - Syntax:
-//   - *x - dereference operator, used to access the value at the address stored in x
-//   - &x - address operator, used to get the memory address of x
+//   - *<type> pointer type declaration, used to define that a variable or field holds a reference
+//   - *<var>  dereference operator, used to access the value at the address stored in x
+//   - &<var>  address operator, used to get the memory address of x«
 
 package datatypes
 
 import "fmt"
 
 //==================================================================================================
-// Using Pointers
+// Pointers
 //==================================================================================================
 
-func UsingPointers() {
+func Pointers() {
+
+	// Declaring a Pointer Type (* in type)
+	// - To declare a pointer type, the "*" is used on the data type (e.g., "*int").
+	// - Note: Pointers can store nil values when they are not initialized to any memory address.
+	// - Output: ptr: <nil>
+
+	var ptr *int = nil
+	fmt.Println("ptr:", ptr)
+
+	// Address Operator (& in variable)
+	// - To get the memory address of a variable, the "&" operator is used before the variable name.
+	// - Output: ptr: 0xc00000a0b8 (hexadecimal memory address)
+
 	x := 5
+	ptr = &x
+	fmt.Println("ptr:", ptr)
 
-	// Declaring a Pointer
-	// - We will declare a pointer to hold the address of x.
-	// - We can use the "&" operator to get the address of x.
-	// - Output: p: 0xc00000a0b8
-
-	p := &x
-	fmt.Println("p:", p)
-
-	// Dereferencing a Pointer
-	// - We can use the "*" operator to dereference the pointer and get the value at the address.
+	// Dereferencing a Pointer (* in variable)
+	// - To access or retrieve the actual value stored at the memory address, the "*" operator is
+	//   used on the pointer variable.
 	// - Output: y: 5
 
-	y := *p
+	y := *ptr
 	fmt.Println("y:", y)
-
-	// Changing the Value of a Pointer
-	// - Functions can receive pointers instead of values, to manipulate the original variable.
-	// - Output: x: 10
-
-	changeValue(p)
-	fmt.Println("x:", *p)
-
-	// Pointers Can Have Nil Values
-	// - A pointer can be nil, meaning it doesn't point to any address.
-	// - Output: p: <nil>
-
-	p = nil
-	fmt.Println("p:", p)
 }
 
 //==================================================================================================
-// Pointer Reference
+// Pointer Arguments
 //==================================================================================================
 
-// Pointers
-// - Pointers hold the memory address of a value.
-// - Passing a pointer allows functions to modify the original data without copying it.
+// Pointers Arguments
+// - Passing a pointer arguments allow functions to modify the original data without copying it.
 // - Changes made through the pointer will affect the original variable.
-// - In the example below, the "x" variable will be modified outside the function.
 
-func changeValue(x *int) {
+func SetValue(x *int) {
 	*x = 10
+}
+
+// Example
+// - In the example below, the "x" variable will be modified outside the function.
+// - Output: x: 10
+
+func ProcessValue() {
+	x := 5
+	SetValue(&x)
+	fmt.Println("x:", x)
 }
