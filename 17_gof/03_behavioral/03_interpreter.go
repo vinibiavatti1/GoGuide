@@ -1,158 +1,99 @@
 // Interpreter
-// The Interpreter pattern is a behavioral design pattern that defines a representation for a language's grammar
-// along with an interpreter to evaluate sentences in that language.
-// In Go, this is achieved by defining a core expression interface and implementing it across terminal and non-terminal structs.
+// - The Interpreter pattern is a behavioral design pattern that defines a representation for a
+//   language's grammar along with an interpreter to evaluate sentences in that language.
+// - In Go, this is achieved by defining a core expression interface and implementing it across
+//   terminal and non-terminal structs.
 
 package behavioral
 
-import (
-	"fmt"
-)
+import "fmt"
 
 // Protocol
-// The interface below defines the core behavior for evaluating and stringifying expressions.
+// - The interface below defines the core behavior for evaluating and stringifying expressions.
+
 type Expression interface {
-	fmt.Stringer
-	Evaluate(context *Context) int
+	Evaluate(ctx map[string]float64) float64
+	String() string
 }
 
-// Context
-// Contains global information (variable states) needed during interpretation.
-type Context struct {
-	variables map[string]int
+// Expressions
+// - VarExp represents a variable terminal expression.
+// - ConstExp represents a constant terminal expression.
+// - AddExp represents a non-terminal addition expression.
+// - MulExp represents a non-terminal multiplication expression.
+
+type VarExp struct {
+	Name string
+}
+type ConstExp struct {
+	Value float64
+}
+type AddExp struct {
+	Exp1 Expression
+	Exp2 Expression
+}
+type MulExp struct {
+	Exp1 Expression
+	Exp2 Expression
 }
 
-func NewContext() *Context {
-	return &Context{variables: make(map[string]int)}
+// Evaluate Implementations
+// - Each expression type implements the Evaluate method to compute its value based on the context.
+
+func (v *VarExp) Evaluate(ctx map[string]float64) float64 {
+	return ctx[v.Name]
+}
+func (v *ConstExp) Evaluate(ctx map[string]float64) float64 {
+	return v.Value
+}
+func (v *AddExp) Evaluate(ctx map[string]float64) float64 {
+	return v.Exp1.Evaluate(ctx) + v.Exp2.Evaluate(ctx)
+}
+func (v *MulExp) Evaluate(ctx map[string]float64) float64 {
+	return v.Exp1.Evaluate(ctx) * v.Exp2.Evaluate(ctx)
 }
 
-func (c *Context) SetVariable(name string, value int) {
-	c.variables[name] = value
-}
+// String Implementations
+// - Each expression type implements the String method to return its string representation.
 
-func (c *Context) GetVariable(name string) int {
-	return c.variables[name]
+func (v *VarExp) String() string {
+	return v.Name
 }
-
-// Terminal Expressions
-// Structs representing terminal symbols in the grammar (numbers and variables).
-type (
-	NumberExpression   struct{ number int }
-	VariableExpression struct{ name string }
-)
-
-// Terminal Implementations
-func (n *NumberExpression) Evaluate(context *Context) int {
-	return n.number
+func (v *ConstExp) String() string {
+	return fmt.Sprintf("%.2f", v.Value)
 }
-func (n *NumberExpression) String() string {
-	return fmt.Sprintf("%d", n.number)
+func (v *AddExp) String() string {
+	return fmt.Sprintf("(%s + %s)", v.Exp1.String(), v.Exp2.String())
 }
-
-func (v *VariableExpression) Evaluate(context *Context) int {
-	return context.GetVariable(v.name)
-}
-func (v *VariableExpression) String() string {
-	return v.name
-}
-
-// Non-Terminal Expressions
-// Structs implementing composite grammar rules (addition and subtraction).
-type (
-	AddExpression struct{ x, y Expression }
-	SubExpression struct{ x, y Expression }
-)
-
-// Non-Terminal Implementations
-func (a *AddExpression) Evaluate(context *Context) int {
-	return a.x.Evaluate(context) + a.y.Evaluate(context)
-}
-func (a *AddExpression) String() string {
-	return fmt.Sprintf("(%s + %s)", a.x, a.y)
-}
-
-func (s *SubExpression) Evaluate(context *Context) int {
-	return s.x.Evaluate(context) - s.y.Evaluate(context)
-}
-func (s *SubExpression) String() string {
-	return fmt.Sprintf("(%s - %s)", s.x, s.y)
-}
-
-// Client Fluent Builder
-// Simplifies building the Abstract Syntax Tree (AST) using a fluent API.
-type ExpressionEvaluator struct {
-	expression Expression
-}
-
-func NewExpressionEvaluator(number int) *ExpressionEvaluator {
-	return &ExpressionEvaluator{expression: &NumberExpression{number: number}}
-}
-
-func (e *ExpressionEvaluator) Plus(expr Expression) *ExpressionEvaluator {
-	e.expression = &AddExpression{x: e.expression, y: expr}
-	return e
-}
-
-func (e *ExpressionEvaluator) PlusNum(number int) *ExpressionEvaluator {
-	e.expression = &AddExpression{x: e.expression, y: &NumberExpression{number: number}}
-	return e
-}
-
-func (e *ExpressionEvaluator) PlusVar(name string) *ExpressionEvaluator {
-	e.expression = &AddExpression{x: e.expression, y: &VariableExpression{name: name}}
-	return e
-}
-
-func (e *ExpressionEvaluator) Minus(expr Expression) *ExpressionEvaluator {
-	e.expression = &SubExpression{x: e.expression, y: expr}
-	return e
-}
-
-func (e *ExpressionEvaluator) MinusNum(number int) *ExpressionEvaluator {
-	e.expression = &SubExpression{x: e.expression, y: &NumberExpression{number: number}}
-	return e
-}
-
-func (e *ExpressionEvaluator) MinusVar(name string) *ExpressionEvaluator {
-	e.expression = &SubExpression{x: e.expression, y: &VariableExpression{name: name}}
-	return e
-}
-
-func (e *ExpressionEvaluator) Expression() Expression {
-	return e.expression
-}
-
-func (e *ExpressionEvaluator) Evaluate(context *Context) int {
-	return e.expression.Evaluate(context)
-}
-
-func (e *ExpressionEvaluator) String() string {
-	return e.expression.String()
+func (v *MulExp) String() string {
+	return fmt.Sprintf("(%s * %s)", v.Exp1.String(), v.Exp2.String())
 }
 
 // Test Interpreter
-// The test function demonstrates how to build and interpret complex grammar expressions.
+// - The test function demonstrates how to build and interpret complex grammar expressions.
+// - Output: (((a * b) + (a * b)) + (2.00 * (a * b)))
+// - Output: 100
+
 func TestInterpreter() {
-	expression := NewExpressionEvaluator(5).
-		PlusNum(3).
-		PlusVar("x").
-		Plus(NewExpressionEvaluator(4).
-			PlusNum(7).
-			MinusVar("y").
-			Plus(NewExpressionEvaluator(2).
-				PlusNum(3).
-				MinusNum(4).
-				PlusVar("x").
-				Expression(),
-			).
-			PlusNum(12).
-			Expression(),
-		)
-
-	context := NewContext()
-	context.SetVariable("x", 3)
-	context.SetVariable("y", 6)
-
-	fmt.Println(expression)                   // Output: (((5 + 3) + x) + ((((4 + 7) - y) + (((2 + 3) - 4) + x)) + 12))
-	fmt.Println(expression.Evaluate(context)) // Output: 32
+	exp := &AddExp{
+		Exp1: &AddExp{
+			Exp1: &MulExp{
+				Exp1: &VarExp{Name: "a"},
+				Exp2: &VarExp{Name: "b"},
+			},
+			Exp2: &MulExp{
+				Exp1: &VarExp{Name: "a"},
+				Exp2: &VarExp{Name: "b"},
+			},
+		},
+		Exp2: &MulExp{
+			Exp1: &ConstExp{Value: 2},
+			Exp2: &MulExp{
+				Exp1: &VarExp{Name: "a"},
+				Exp2: &VarExp{Name: "b"},
+			},
+		},
+	}
+	fmt.Println(exp.String())
+	fmt.Println(exp.Evaluate(map[string]float64{"a": 5, "b": 5}))
 }
